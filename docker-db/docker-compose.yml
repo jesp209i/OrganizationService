@@ -1,0 +1,15 @@
+  
+version: "3.8"
+
+services:
+    mssql:
+        image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+        ports:
+            - 1433:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=org@niz123 # Choose a better password
+        volumes: 
+            - data:/var/opt/mssql
+volumes: 
+    data:

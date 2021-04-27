@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.1.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="Rebus" Version="6.5.5" />
+    <PackageReference Include="Rebus.Autofac" Version="7.2.0" />
+    <PackageReference Include="Rebus.AzureServiceBus" Version="8.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OrganizationService.Shared.Messages\OrganizationService.Shared.Messages.csproj" />
+  </ItemGroup>
+
+</Project>
