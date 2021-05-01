@@ -17,5 +17,6 @@ namespace OrganizationService.Persistence.Entities
         public string Website { get; set; }
         public string ChangedBy { get; set; }
         public DateTime ChangeDate { get; set; }
+        public IList<OrganizationMemberEntity> Members { get; set; } = new List<OrganizationMemberEntity>();
     }
 }

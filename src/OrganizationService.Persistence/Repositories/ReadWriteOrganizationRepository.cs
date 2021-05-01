@@ -27,7 +27,7 @@ namespace OrganizationService.Persistence.Repositories
 
         public async Task<OrganizationEntity> GetAsync(Guid id)
         {
-            var entity = await _context.Organizations.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.Organizations.Include(x=> x.Members).FirstOrDefaultAsync(x => x.Id == id);
             
             if (entity is null)
                 throw new EntityNotFoundException($"Id: {id} does not represent an OrganizationEntity");
@@ -37,11 +37,22 @@ namespace OrganizationService.Persistence.Repositories
 
         public async Task UpdateAsync(OrganizationEntity updatedOrganization)
         {
-            var orgEntity = await _context.Organizations.FirstOrDefaultAsync(x => x.Id == updatedOrganization.Id);
+            var orgEntity = await _context.Organizations.Include(x=> x.Members).FirstOrDefaultAsync(x => x.Id == updatedOrganization.Id);
             if (orgEntity is null)
                 throw new EntityNotFoundException($"Id: {updatedOrganization.Id} does not represent an OrganizationEntity");
 
-            orgEntity = updatedOrganization;
+            orgEntity.Name = updatedOrganization.Name;
+            orgEntity.Street = updatedOrganization.Street;
+            orgEntity.StreetExtended = updatedOrganization.StreetExtended;
+            orgEntity.PostalCode = updatedOrganization.PostalCode;
+            orgEntity.City = updatedOrganization.City;
+            orgEntity.Country = updatedOrganization.Country;
+            orgEntity.VatNumber = updatedOrganization.VatNumber;
+            orgEntity.Website = updatedOrganization.Website;
+            orgEntity.ChangeDate = updatedOrganization.ChangeDate;
+            orgEntity.ChangedBy = updatedOrganization.ChangedBy;
+            orgEntity.Members = updatedOrganization.Members;
+
             _context.Entry(orgEntity).State = EntityState.Modified;
             
             await _context.SaveChangesAsync();

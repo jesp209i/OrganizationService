@@ -18,6 +18,7 @@ namespace OrganizationService.Persistence.Extensions
             });
 
             services.AddScoped<IReadWriteOrganizationRepository, ReadWriteOrganizationRepository>();
+            //services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
 
             return services;
         }
@@ -32,6 +33,7 @@ namespace OrganizationService.Persistence.Extensions
             });
 
             services.AddScoped<IReadOnlyOrganizationRepository, ReadOnlyOrganizationRepository>();
+            services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
 
             return services;
         }

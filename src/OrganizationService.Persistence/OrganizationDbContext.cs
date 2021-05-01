@@ -11,11 +11,15 @@ namespace OrganizationService.Persistence
         public OrganizationDbContext(DbContextOptions<OrganizationDbContext> options) : base(options) { }
 
         public DbSet<OrganizationEntity> Organizations { get; set; }
-        /*
+        public DbSet<OrganizationMemberEntity> OrganizationMembers { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfigurationsFromAssembly(typeof(OrganizationDbContext).Assembly);
+            //builder.ApplyConfigurationsFromAssembly(typeof(OrganizationDbContext).Assembly);
+
+            builder.Entity<OrganizationMemberEntity>()
+                .HasKey(c => new { c.OrganizationId, c.Email });
         }
-        */
+        
     }
 }
