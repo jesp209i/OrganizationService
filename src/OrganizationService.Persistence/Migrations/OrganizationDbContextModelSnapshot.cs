@@ -59,6 +59,41 @@ namespace OrganizationService.Persistence.Migrations
 
                     b.ToTable("Organizations");
                 });
+
+            modelBuilder.Entity("OrganizationService.Persistence.Entities.OrganizationMemberEntity", b =>
+                {
+                    b.Property<Guid>("OrganizationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationId", "Email");
+
+                    b.ToTable("OrganizationMembers");
+                });
+
+            modelBuilder.Entity("OrganizationService.Persistence.Entities.OrganizationMemberEntity", b =>
+                {
+                    b.HasOne("OrganizationService.Persistence.Entities.OrganizationEntity", "Organization")
+                        .WithMany("Members")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("OrganizationService.Persistence.Entities.OrganizationEntity", b =>
+                {
+                    b.Navigation("Members");
+                });
 #pragma warning restore 612, 618
         }
     }

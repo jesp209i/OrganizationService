@@ -10,8 +10,8 @@ using OrganizationService.Persistence;
 namespace OrganizationService.Persistence.Migrations
 {
     [DbContext(typeof(OrganizationDbContext))]
-    [Migration("20210418135716_InitialOrganization")]
-    partial class InitialOrganization
+    [Migration("20210501122959_OrganizationsAndMembers2")]
+    partial class OrganizationsAndMembers2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,12 @@ namespace OrganizationService.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ChangedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -54,6 +60,41 @@ namespace OrganizationService.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Organizations");
+                });
+
+            modelBuilder.Entity("OrganizationService.Persistence.Entities.OrganizationMemberEntity", b =>
+                {
+                    b.Property<Guid>("OrganizationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrganizationId", "Email");
+
+                    b.ToTable("OrganizationMembers");
+                });
+
+            modelBuilder.Entity("OrganizationService.Persistence.Entities.OrganizationMemberEntity", b =>
+                {
+                    b.HasOne("OrganizationService.Persistence.Entities.OrganizationEntity", "Organization")
+                        .WithMany("Members")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("OrganizationService.Persistence.Entities.OrganizationEntity", b =>
+                {
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }
