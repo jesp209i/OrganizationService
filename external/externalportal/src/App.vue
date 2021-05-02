@@ -1,52 +1,42 @@
 <template>
-  <div>
-    <md-app>
-      <md-app-toolbar class="md-primary" to="/">
-        <span class="md-title" to="/">Organization overview</span>
-      </md-app-toolbar>
-
-      <md-app-drawer md-permanent="card">
-        <md-list>
-          <md-list-item to="/">
-            <md-icon>home</md-icon>
-            <span class="md-list-item-text">Home</span>
-          </md-list-item>
-
-          <md-list-item to="/organizations">
-            <md-icon>toc</md-icon>
-            <span class="md-list-item-text">Organizations</span>
-          </md-list-item>
-
-          <md-list-item  to="/add">
-            <md-icon>add_circle_outline</md-icon>
-            <span class="md-list-item-text">Add Organization</span>
-          </md-list-item>
-
-        </md-list>
-      </md-app-drawer>
-
-      <md-app-content>
-        <router-view></router-view>
-      </md-app-content>
-    </md-app>
-  </div>
+  <mdb-container>
+      <mdb-navbar color="indigo" dark>
+        <mdb-navbar-brand to="/"> 
+          Site
+        </mdb-navbar-brand>
+        <mdb-navbar-toggler>
+          <mdb-navbar-nav>
+            <mdb-nav-item to="/organizations">Organizations</mdb-nav-item>
+            <mdb-nav-item to="/add">Add Organization</mdb-nav-item>
+            <mdb-nav-item to="/members">Members</mdb-nav-item>
+          </mdb-navbar-nav>
+        </mdb-navbar-toggler>
+      </mdb-navbar>
+    <mdb-row>
+      <mdb-col><router-view></router-view> </mdb-col>
+    </mdb-row>
+  </mdb-container>
 </template>
 
 <script>
+  import {mdbContainer, mdbRow, mdbCol, mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem } from 'mdbvue'
+
   export default {
-    name: 'App'
+    name: 'App',
+    components: {
+      mdbContainer, 
+      mdbRow, 
+      mdbCol, 
+      mdbNavbar,
+      mdbNavbarBrand,
+      mdbNavbarToggler,
+      mdbNavbarNav,
+      mdbNavItem
+    }
   }
 </script>
 
 <style scoped>
-  .md-app {
-    min-height: 250px;
-    border: 1px solid rgba(#000, .12);
-  }
-
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-  }
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
 </style>
 

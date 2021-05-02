@@ -1,6 +1,7 @@
 ﻿using ExternalPortal.Api.Models;
 using Newtonsoft.Json;
 using OrganizationService.Shared.Messages.Commands.Organization;
+using OrganizationService.Shared.Messages.Commands.OrganizationMember;
 using Rebus.Bus;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,25 @@ namespace ExternalPortal.Api.Services
             return response;
         }
 
+        public async Task<IEnumerable<OrganizationMemberDto>> GetOrganizationMembers(Guid organizationId)
+        {
+            var response = await GetAsync<List<OrganizationMemberDto>>($"{organizationId}/members");
+            return response;
+        }
+
+        public async Task AddOrganizationMember(AddOrganizationMemberDto addMember)
+        {
+            var command = new AddOrganizationMemberCommand(
+                addMember.OrganizationId,
+                addMember.UserName,
+                addMember.Email,
+                addMember.Permission,
+                addMember.ChangeDate,
+                addMember.ChangedBy
+                );
+            await _bus.Send(command);
+        }
+
         public async Task CreateOrganization(OrganizationDto newOrganization)
         {
             var id = Guid.NewGuid();
@@ -59,6 +79,43 @@ namespace ExternalPortal.Api.Services
                 newOrganization.Website,
                 newOrganization.ChangeDate,
                 newOrganization.ChangedBy);
+            await _bus.Send(command);
+        }
+
+        public async Task UpdateAddress(string id, UpdateOrganizationAddressDto updateAddress)
+        {
+            var command = new ChangeOrganizationAddressCommand(
+                new Guid(id),
+                updateAddress.Street,
+                updateAddress.StreetExtended,
+                updateAddress.PostalCode,
+                updateAddress.City,
+                updateAddress.Country,
+                updateAddress.ChangeDate,
+                updateAddress.ChangedBy
+                );
+            await _bus.Send(command);
+        }
+
+        public async Task UpdateVatNumber(string id, UpdateOrganizationVatNumberDto updateVatNumber)
+        {
+            var command = new ChangeOrganizationVatNumberCommand(
+                new Guid(id),
+                updateVatNumber.VatNumber,
+                updateVatNumber.ChangeDate,
+                updateVatNumber.ChangedBy
+                );
+            await _bus.Send(command);
+        }
+
+        public async Task UpdateWebsite(string id, UpdateOrganizationWebsiteDto updateWebsite)
+        {
+            var command = new ChangeOrganizationWebsiteCommand(
+                new Guid(id),
+                updateWebsite.Website,
+                updateWebsite.ChangeDate,
+                updateWebsite.ChangedBy
+                );
             await _bus.Send(command);
         }
     }

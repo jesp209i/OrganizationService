@@ -3,6 +3,7 @@ using System;
 using Rebus.Config;
 using Rebus.Routing.TypeBased;
 using OrganizationService.Shared.Messages.Commands.Organization;
+using OrganizationService.Shared.Messages.Commands.OrganizationMember;
 
 namespace OrganizationService.EventEmitter.Modules
 {
@@ -23,7 +24,10 @@ namespace OrganizationService.EventEmitter.Modules
                     .Map(typeof(CreateOrganizationCommand), InputQueue)
                     .Map(typeof(ChangeOrganizationAddressCommand), InputQueue)
                     .Map(typeof(ChangeOrganizationVatNumberCommand), InputQueue)
-                    .Map(typeof(ChangeOrganizationWebsiteCommand), InputQueue))
+                    .Map(typeof(ChangeOrganizationWebsiteCommand), InputQueue)
+                    .Map(typeof(AddOrganizationMemberCommand), InputQueue)
+                    .Map(typeof(ChangeOrganizationMemberPermissionCommand), InputQueue)
+                    )
             );
         }
     }

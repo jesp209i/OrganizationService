@@ -11,8 +11,10 @@ namespace OrganizationService.EventEmitter
         {
             var container = ConfigureContainer();
             var application = container.Resolve<OrganizationServiceEventEmitter>();
-
-            await application.Run(args);
+            while (true)
+            {
+                await application.Run(args);
+            }
 
         }
         private static IContainer ConfigureContainer()

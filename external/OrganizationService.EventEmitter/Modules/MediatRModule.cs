@@ -12,7 +12,7 @@ namespace OrganizationService.EventEmitter.Modules
         protected override void Load(ContainerBuilder builder)
         {
             Assembly me = typeof(MediatRModule).Assembly;
-            builder.AddMediatR(me);
+            builder.RegisterMediatR(me);
         }
     }
 }

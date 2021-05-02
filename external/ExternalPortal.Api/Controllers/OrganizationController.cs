@@ -34,10 +34,44 @@ namespace ExternalPortal.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id}/members")]
+        public async Task<IActionResult> GetOrganizationMembers([GuidModelValidator] string id)
+        {
+            var validId = Guid.Parse(id);
+            var response = await _organizationApiService.GetOrganizationMembers(validId);
+            if (response == null)
+                return NotFound();
+            return Ok(response);
+        }
+
+        [HttpPost("{id}/members")]
+        public async Task CreateOrganizationMember(AddOrganizationMemberDto addMember)
+        {
+            await _organizationApiService.AddOrganizationMember(addMember);
+        }
+
         [HttpPost]
         public async Task CreateOrganization(OrganizationDto newOrganization)
         {
             await _organizationApiService.CreateOrganization(newOrganization);
+        }
+        
+        [HttpPost("{id}/website")]
+        public async Task UpdateOrganizationWebsite([GuidModelValidator] string id, UpdateOrganizationWebsiteDto updateWebsite)
+        {
+            await _organizationApiService.UpdateWebsite(id, updateWebsite);
+        }
+
+        [HttpPost("{id}/address")]
+        public async Task UpdateOrganizationAddress([GuidModelValidator] string id, UpdateOrganizationAddressDto updateAddress)
+        {
+            await _organizationApiService.UpdateAddress(id, updateAddress);
+        }
+
+        [HttpPost("{id}/vatnumber")]
+        public async Task UpdateOrganizationVatNumber([GuidModelValidator] string id, UpdateOrganizationVatNumberDto updateName)
+        {
+            await _organizationApiService.UpdateVatNumber(id, updateName);
         }
     }
 }

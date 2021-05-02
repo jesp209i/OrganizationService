@@ -1,19 +1,14 @@
 <template>
-<div>
-  <h2>Create Organization</h2>
   <mdb-card class="w-75 mb-4">
     <form @submit.prevent="submitForm">
-    <mdb-card-header>New Organization</mdb-card-header>
+    <mdb-card-header>Changing Address</mdb-card-header>
     <mdb-card-body>
       <mdb-card-text>
-        <mdb-input  label="Name" v-model="form.name" />
         <mdb-input  label="Street" v-model="form.street" />
         <mdb-input  label="Street Extended" v-model="form.streetExtended" />
         <mdb-input  label="Postal Code" v-model="form.postalCode" />
         <mdb-input  label="City" v-model="form.city" />
         <mdb-input  label="Country" v-model="form.country" />
-        <mdb-input  label="VAT Number" v-model="form.vatNumber" />
-        <mdb-input  label="Website" v-model="form.website" />
         <mdb-input  label="Changed By" v-model="form.changedBy" />
         </mdb-card-text>
       <mdb-btn color="warning" v-on:click="$emit('toggleAddress')">Abort</mdb-btn>
@@ -27,17 +22,17 @@
     </mdb-card-body>
     </form>
   </mdb-card>
-</div>
 </template>
 
 <script>
-  import organizationService from '../services/organizationService'
-  import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardText, mdbBtn, mdbInput} from 'mdbvue'
-  import formValidationService from '../services/formValidationService'
+  import organizationService from '../../services/organizationService'
+  import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardText, mdbBtn, mdbInput} from 'mdbvue';
+  import formValidationService from '../../services/formValidationService'
 
   export default {
-    name: 'AddOrganization',
-        components: {
+    name: 'ChangeAddress',
+    props: ['street','streetExtended','postalCode','city','country', 'organizationId'],
+    components: {
       mdbCard,
       mdbCardBody,
       mdbCardHeader,
@@ -47,26 +42,23 @@
     },
     data: () => ({
       form : {
-        name : null,
         street: null,
         streetExtended: null,
         postalCode: null,
         city: null,
         country: null,
-        vatNumber: null,
-        website: null,
         changeDate: new Date().toJSON(),
         changedBy: null
       },
       formErrors : null,
       sending: false
-    }), 
+    }),   
     methods: {
       submitForm(){
-        this.formErrors = formValidationService.validateCreateForm(this.form);
+        this.formErrors = formValidationService.validateAddressForm(this.form);
         if (this.formErrors.isValid()){
           this.saveForm()
-        }        
+        }
       },
       clearForm () {
         this.formErrors = null
@@ -78,7 +70,7 @@
         this.sending = true
         
         // Instead of this timeout, here you can call your API
-        await organizationService.postCreateOrganization(this.form)
+        await organizationService.postUpdateOrganizationAddress(this.form, this.organizationId)
         .then( () => {
           window.setTimeout(() => {
 
@@ -91,11 +83,18 @@
           console.log(error)
         });
         this.$router.go(0)
-        
       }
+    },
+    created(){
+      this.form.street = this.street
+      this.form.streetExtended = this.streetExtended
+      this.form.postalCode = this.postalCode
+      this.form.city = this.city
+      this.form.country = this.country
     }
   }
 </script>
 
 <style scoped>
+
 </style>
