@@ -9,5 +9,6 @@ namespace OrganizationService.Infrastructure.Interfaces
     {
         Task<OrganizationEntity> GetOrganizationAsync(Guid id);
         Task<IEnumerable<OrganizationEntity>> GetAllOrganizations();
+        Task<IEnumerable<OrganizationMemberEntity>> GetUserOrganizationsByEmail(string email);
     }
 }

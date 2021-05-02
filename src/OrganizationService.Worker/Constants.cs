@@ -10,7 +10,7 @@ namespace OrganizationService.Worker
         public static class ServiceBus
         {
             public static string InputQueue => "Servicebus_Organization_input".ToLower();
-            public static string ErrorQueue => "Servicebus_Organization_input".ToLower();
+            public static string ErrorQueue => "Servicebus_Organization_Error".ToLower();
         }
         public static class EnvironmentVariables
         {

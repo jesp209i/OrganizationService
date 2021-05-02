@@ -1,9 +1,12 @@
 ﻿using OrganizationService.ApplicationService.Models;
+using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.Domain;
+using OrganizationService.Domain.Enum;
 using OrganizationService.Domain.ValueObjects;
 using OrganizationService.Persistence.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace OrganizationService.ApplicationService
@@ -42,13 +45,39 @@ namespace OrganizationService.ApplicationService
             var orgName = new OrganizationName(dto.Name);
             var orgAddress = new Address(dto.Street, dto.StreetExtended, dto.PostalCode, dto.City, dto.Country);
             var orgVatNumber = new VatNumber(dto.VatNumber);
-            var organization = new Organization(dto.Id, orgName, orgAddress, orgVatNumber, dto.Website)
-            { 
-                ChangedBy = dto.ChangedBy,
-                ChangeDate = dto.ChangeDate
-            };
+            var organization = new Organization(dto.Id, orgName, orgAddress, orgVatNumber, dto.Website, new List<OrganizationMember>(), dto.ChangeDate, dto.ChangedBy);
 
             return organization;
+        }
+
+        public IEnumerable<OrganizationMemberDto> ToOrganizationMembersDto() =>
+            _input switch
+            {
+                Organization org => OrganizationMemberDomainToDto(org),
+                OrganizationEntity orgEntity => OrganizationMemberEntityToDto(orgEntity),
+                _ => throw new ArgumentException("input must be either domain or entity to make a Dto"),
+            };            
+        
+
+        private List<OrganizationMemberDto> OrganizationMemberEntityToDto(OrganizationEntity entity)
+        {
+            return entity.Members.Select(x => new OrganizationMemberDto { 
+                OrganizationId = x.OrganizationId,
+                UserName = x.UserName,
+                Email = x.Email,
+                Permission = (Permission)x.Permission
+            }).ToList();
+        }
+
+        private List<OrganizationMemberDto> OrganizationMemberDomainToDto(Organization org)
+        {
+            return org.Members.Select(x => new OrganizationMemberDto
+            {
+                OrganizationId = x.OrganizationId,
+                UserName = x.UserName,
+                Email = x.Email,
+                Permission = x.Permission
+            }).ToList();
         }
 
         private OrganizationDto DomainToDto(Organization org)

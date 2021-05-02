@@ -21,7 +21,7 @@ namespace OrganizationService.Persistence.Repositories
 
         public async Task<OrganizationEntity> GetAsync(Guid id)
         {
-            var entity = await _context.Organizations.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.Organizations.Include(x=> x.Members).FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity is null)
                 throw new EntityNotFoundException($"Id: {id} does not represent an OrganizationEntity");

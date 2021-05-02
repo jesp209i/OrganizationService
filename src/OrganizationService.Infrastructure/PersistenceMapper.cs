@@ -1,7 +1,10 @@
 ﻿using OrganizationService.Domain;
+using OrganizationService.Domain.Enum;
 using OrganizationService.Domain.ValueObjects;
 using OrganizationService.Persistence.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OrganizationService.Infrastructure
 {
@@ -35,6 +38,7 @@ namespace OrganizationService.Infrastructure
                 ChangedBy = org.ChangedBy,
                 ChangeDate = org.ChangeDate
             };
+            orgEntity.Members = MemberListToEntity();
 
             return orgEntity;
         }
@@ -48,14 +52,34 @@ namespace OrganizationService.Infrastructure
             var orgName = new OrganizationName(orgEntity.Name);
             var orgAddress = new Address(orgEntity.Street, orgEntity.StreetExtended, orgEntity.PostalCode, orgEntity.City, orgEntity.Country);
             var orgVatNumber = new VatNumber(orgEntity.VatNumber);
-            var org = new Organization(orgEntity.Id, orgName, orgAddress, orgVatNumber, orgEntity.Website)
-            {
-                ChangedBy = orgEntity.ChangedBy,
-                ChangeDate = orgEntity.ChangeDate
-            }
-                ;
+            var members = MemberListToDomain();
+            var org = new Organization(orgEntity.Id, orgName, orgAddress, orgVatNumber, orgEntity.Website, members, orgEntity.ChangeDate, orgEntity.ChangedBy);
 
             return org;
+        }
+
+        private List<OrganizationMember> MemberListToDomain()
+        {
+            if ((_input is OrganizationEntity) == false)
+                throw new ArgumentException("input must be an OrganizationEntity to make Domain Object");
+            
+            var orgEntity = _input as OrganizationEntity;
+
+            var members = orgEntity.Members.Count > 0 ? orgEntity.Members.Select(x => new OrganizationMember(new OrganizationId(x.OrganizationId), x.Email, x.UserName, (Permission)x.Permission)).ToList() : new List<OrganizationMember>();
+
+            return members;
+        }
+
+        private List<OrganizationMemberEntity> MemberListToEntity()
+        {
+            if ((_input is Organization) == false)
+                throw new ArgumentException("input must be an Organization to make Entity");
+
+            var organization = _input as Organization;
+            if (organization.Members.Count > 0)
+                return organization.Members.Select(x => new OrganizationMemberEntity(x.OrganizationId, x.Email, x.UserName, x.Permission)).ToList();
+                    
+            return new List<OrganizationMemberEntity>();
         }
     }
 }

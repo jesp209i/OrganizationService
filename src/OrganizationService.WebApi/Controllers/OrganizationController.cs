@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrganizationService.ApplicationService.Models;
 using OrganizationService.ApplicationService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OrganizationService.ApplicationService.Services;
+using OrganizationService.WebApi.Viewmodels;
+using System.Linq;
 
 namespace OrganizationService.WebApi.Controllers
 {
@@ -19,14 +19,33 @@ namespace OrganizationService.WebApi.Controllers
             _orgService = orgService;
         }
         [HttpGet]
-        public async Task<IEnumerable<OrganizationDto>> GetOrganizations()
+        public async Task<IEnumerable<Organization>> GetOrganizations()
         {
-            return await _orgService.GetAll();
+            var result = await _orgService.GetAll();
+            
+            return 
+                result
+                .Select(x => new Organization(x))
+                .ToList();
         }
+
         [HttpGet("{id}")]
-        public async Task<OrganizationDto> GetOrganization(Guid id)
+        public async Task<Organization> GetOrganization(Guid id)
         {
-            return await _orgService.GetOrganization(id);
+            var result = await _orgService.GetOrganization(id);
+
+            return new Organization(result);
+        }
+
+        [HttpGet("{id}/members")]
+        public async Task<IEnumerable<OrganizationMember>> GetOrganizationMembers(Guid id)
+        {
+            var result = await _orgService.GetOrganizationMembers(id);
+
+            return
+                result
+                .Select(x => new OrganizationMember(x))
+                .ToList();
         }
     }
 }

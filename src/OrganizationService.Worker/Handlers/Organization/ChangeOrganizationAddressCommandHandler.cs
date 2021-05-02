@@ -11,33 +11,30 @@ using System.Threading.Tasks;
 
 namespace OrganizationService.Worker.Handlers.Organization
 {
-    public class CreateOrganizationCommandHandler : IHandleMessages<CreateOrganizationCommand>
+    public class ChangeOrganizationAddressCommandHandler : IHandleMessages<ChangeOrganizationAddressCommand>
     {
         private readonly IOrganizationWorkerService _organizationService;
-        private readonly ILogger<CreateOrganizationCommandHandler> _logger;
+        private readonly ILogger<ChangeOrganizationAddressCommandHandler> _logger;
 
-        public CreateOrganizationCommandHandler(IOrganizationWorkerService organizationService, ILogger<CreateOrganizationCommandHandler> logger)
+        public ChangeOrganizationAddressCommandHandler(IOrganizationWorkerService organizationService, ILogger<ChangeOrganizationAddressCommandHandler> logger)
         {
             _organizationService = organizationService;
             _logger = logger;
         }
-        public async Task Handle(CreateOrganizationCommand m)
+        public async Task Handle(ChangeOrganizationAddressCommand m)
         {
-            var organization = new OrganizationDto
+            var organization = new ChangeOrganizationAddressDto
             {
                 Id = m.Id,
-                Name = m.Name,
                 Street = m.Street,
                 StreetExtended = m.StreetExtended,
                 PostalCode = m.PostalCode,
                 City = m.City,
                 Country = m.Country,
-                VatNumber = m.VatNumber,
-                Website = m.Website,
                 ChangeDate = m.ChangeDate,
                 ChangedBy = m.ChangedBy
             };
-            await _organizationService.AddOrganization(organization);
+            await _organizationService.ChangeOrganizationAddress(organization);
         }
     }
 }

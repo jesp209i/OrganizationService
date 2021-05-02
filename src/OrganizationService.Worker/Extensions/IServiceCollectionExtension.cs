@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OrganizationService.Shared.Messages.Commands.Organization;
+using OrganizationService.Shared.Messages.Commands.OrganizationMember;
 using Rebus.Config;
 using Rebus.Retry.Simple;
 using Rebus.Routing.TypeBased;
@@ -30,7 +31,11 @@ namespace OrganizationService.Worker.Extensions
                 .Map(typeof(CreateOrganizationCommand), Constants.ServiceBus.InputQueue)
                 .Map(typeof(ChangeOrganizationAddressCommand), Constants.ServiceBus.InputQueue)
                 .Map(typeof(ChangeOrganizationVatNumberCommand), Constants.ServiceBus.InputQueue)
-                .Map(typeof(ChangeOrganizationWebsiteCommand), Constants.ServiceBus.InputQueue))
+                .Map(typeof(ChangeOrganizationWebsiteCommand), Constants.ServiceBus.InputQueue)
+                .Map(typeof(AddOrganizationMemberCommand), Constants.ServiceBus.InputQueue)
+                .Map(typeof(ChangeOrganizationMemberPermissionCommand), Constants.ServiceBus.InputQueue)
+                )
+                
                 );
             return services;
         }

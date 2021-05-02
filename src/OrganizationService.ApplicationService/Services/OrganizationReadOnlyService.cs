@@ -1,5 +1,7 @@
 ﻿using OrganizationService.ApplicationService.Interfaces;
 using OrganizationService.ApplicationService.Models;
+using OrganizationService.ApplicationService.Models.OrganizationMember;
+using OrganizationService.Domain.Enum;
 using OrganizationService.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,23 @@ namespace OrganizationService.ApplicationService.Services
         {
             var org = await ReadOnlyPersistence.GetOrganizationAsync(id);
             return DtoMapper.Map(org).ToDto();
+        }
+
+        public async Task<IEnumerable<OrganizationMemberDto>> GetOrganizationMembers(Guid id)
+        {
+            var org = await ReadOnlyPersistence.GetOrganizationAsync(id);
+            var members = DtoMapper.Map(org).ToOrganizationMembersDto();
+            return members;
+        }
+
+        public async Task<IEnumerable<OrganizationUserPermissionDto>> GetUserOrganizations(string email)
+        {
+            var orgs = await ReadOnlyPersistence.GetUserOrganizationsByEmail(email);
+            return orgs.Select(x => new OrganizationUserPermissionDto { 
+                OrganizationId = x.Organization.Id,
+                OrganizationName = x.Organization.Name,
+                Permission = (Permission) x.Permission
+            } ).ToList();
         }
     }
 }

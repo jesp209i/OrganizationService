@@ -14,11 +14,24 @@ namespace OrganizationService.Domain.ValueObjects
         
         public Address(string street, string streetExtended, string postalCode, string city, string country)
         {
+            Guard(street, postalCode, city, country);
             Street = street;
             StreetExtended = streetExtended;
             PostalCode = postalCode;
             City = city;
             Country = country;
+        }
+
+        private void Guard(string street, string postalCode, string city, string country)
+        {
+            if (string.IsNullOrWhiteSpace(street))
+                throw new ArgumentException($"{nameof(street)} cannot be an empty string");
+            if (string.IsNullOrWhiteSpace(postalCode))
+                throw new ArgumentException($"{nameof(postalCode)} cannot be an empty string");
+            if (string.IsNullOrWhiteSpace(city))
+                throw new ArgumentException($"{nameof(city)} cannot be an empty string");
+            if (string.IsNullOrWhiteSpace(country))
+                throw new ArgumentException($"{nameof(country)} cannot be an empty string");
         }
 
         public Address(string street, string postalCode, string city, string country)
