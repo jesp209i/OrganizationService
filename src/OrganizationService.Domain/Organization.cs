@@ -62,7 +62,7 @@ namespace OrganizationService.Domain
             if (member != null)
                 throw new ArgumentException($"Organization already has member with email: {email}");
 
-            Members.Add(new OrganizationMember(Id, email, name, permission));
+            Members.Add(new OrganizationMember(Id, new Email(email), name, permission));
             UpdateMeta(changeDate, changedBy);
         }
 

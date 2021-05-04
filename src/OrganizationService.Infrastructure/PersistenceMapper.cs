@@ -65,7 +65,7 @@ namespace OrganizationService.Infrastructure
             
             var orgEntity = _input as OrganizationEntity;
 
-            var members = orgEntity.Members.Count > 0 ? orgEntity.Members.Select(x => new OrganizationMember(new OrganizationId(x.OrganizationId), x.Email, x.UserName, (Permission)x.Permission)).ToList() : new List<OrganizationMember>();
+            var members = orgEntity.Members.Count > 0 ? orgEntity.Members.Select(x => new OrganizationMember(new OrganizationId(x.OrganizationId), new Email(x.Email), x.UserName, (Permission)x.Permission)).ToList() : new List<OrganizationMember>();
 
             return members;
         }
