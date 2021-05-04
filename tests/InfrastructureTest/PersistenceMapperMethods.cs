@@ -1,5 +1,7 @@
+using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
+using InfrastructureTest.Helpers;
 using OrganizationService.Domain;
 using OrganizationService.Infrastructure;
 using OrganizationService.Persistence.Entities;
@@ -11,7 +13,7 @@ namespace InfrastructureTest
     {
         public class ToEntity_
         {
-            [Theory, AutoData]
+            [Theory, EntityAutoData]
             public void ToEntity_Organization_ReturnsOrganizationEntity(Organization organization)
             {
                 // arrange
@@ -24,7 +26,7 @@ namespace InfrastructureTest
                 organizationEntity.Should().BeOfType<OrganizationEntity>();
             }
 
-            [Theory, AutoData]
+            [Theory, EntityAutoData]
             public void ToEntity_Organization_ReturnsEquivalentOrganizationEntity(Organization organization)
             {
                 //arrange
@@ -48,9 +50,10 @@ namespace InfrastructureTest
 
         public class ToDomain_
         {
-            [Theory, AutoData]
+            [Theory, EntityAutoData]
             public void ToDomain_OrganizationEntity_ReturnsOrganization(OrganizationEntity organizationEntity)
             {
+
                 //arrange
                 var mapEntity = PersistenceMapper.Map(organizationEntity);
 
@@ -61,7 +64,7 @@ namespace InfrastructureTest
                 organization.Should().BeOfType<Organization>();
             }
 
-            [Theory, AutoData]
+            [Theory, EntityAutoData]
             public void ToDomain_OrganizationEntity_ReturnsEquivalentOrganization(OrganizationEntity organizationEntity)
             {
                 //arrange
