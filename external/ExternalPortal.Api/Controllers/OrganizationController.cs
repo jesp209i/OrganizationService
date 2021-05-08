@@ -41,6 +41,7 @@ namespace ExternalPortal.Api.Controllers
             var response = await _organizationApiService.GetOrganizationMembers(validId);
             if (response == null)
                 return NotFound();
+            
             return Ok(response);
         }
 
@@ -50,25 +51,31 @@ namespace ExternalPortal.Api.Controllers
             await _organizationApiService.AddOrganizationMember(addMember);
         }
 
+        [HttpPut("{id}/members/{email}")]
+        public async Task UpdateOrganizationMemberPermission(ChangeOrganizationMemberPermissionDto change)
+        {
+            await _organizationApiService.UpdateOrganizationMemberPermission(change);
+        }
+
         [HttpPost]
         public async Task CreateOrganization(OrganizationDto newOrganization)
         {
             await _organizationApiService.CreateOrganization(newOrganization);
         }
         
-        [HttpPost("{id}/website")]
+        [HttpPut("{id}/website")]
         public async Task UpdateOrganizationWebsite([GuidModelValidator] string id, UpdateOrganizationWebsiteDto updateWebsite)
         {
             await _organizationApiService.UpdateWebsite(id, updateWebsite);
         }
 
-        [HttpPost("{id}/address")]
+        [HttpPut("{id}/address")]
         public async Task UpdateOrganizationAddress([GuidModelValidator] string id, UpdateOrganizationAddressDto updateAddress)
         {
             await _organizationApiService.UpdateAddress(id, updateAddress);
         }
 
-        [HttpPost("{id}/vatnumber")]
+        [HttpPut("{id}/vatnumber")]
         public async Task UpdateOrganizationVatNumber([GuidModelValidator] string id, UpdateOrganizationVatNumberDto updateName)
         {
             await _organizationApiService.UpdateVatNumber(id, updateName);

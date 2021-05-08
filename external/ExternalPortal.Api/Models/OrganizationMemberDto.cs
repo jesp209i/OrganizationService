@@ -5,8 +5,6 @@ namespace ExternalPortal.Api.Models
 {
     public class OrganizationMemberDto
     {
-        [JsonProperty("organizationId")]
-        public Guid OrganizationId { get; set; }
         [JsonProperty("userName")]
         public string UserName { get; set; }
         [JsonProperty("email")]

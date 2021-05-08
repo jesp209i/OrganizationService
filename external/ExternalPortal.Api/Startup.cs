@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrganizationService.Shared.Messages.Commands.Organization;
+using OrganizationService.Shared.Messages.Commands.OrganizationMember;
 using Rebus.Config;
 using Rebus.Routing.TypeBased;
 using Rebus.ServiceProvider;
@@ -29,7 +30,7 @@ namespace ExternalPortal.Api
                     builder =>
                     {
                         builder
-                        .WithOrigins("http://localhost:8080", "http://127.0.0.1:8080")
+                        .WithOrigins("http://localhost:8081", "http://127.0.0.1:8081")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -48,7 +49,10 @@ namespace ExternalPortal.Api
                     .Map(typeof(CreateOrganizationCommand), inputQueue)
                     .Map(typeof(ChangeOrganizationAddressCommand), inputQueue)
                     .Map(typeof(ChangeOrganizationVatNumberCommand), inputQueue)
-                    .Map(typeof(ChangeOrganizationWebsiteCommand), inputQueue))
+                    .Map(typeof(ChangeOrganizationWebsiteCommand), inputQueue)
+                    .Map(typeof(AddOrganizationMemberCommand), inputQueue)
+                    .Map(typeof(ChangeOrganizationMemberPermissionCommand), inputQueue)
+                    )
             );
 
             services.AddHttpClient<OrganizationApiService>();

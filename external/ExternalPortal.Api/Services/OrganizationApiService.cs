@@ -19,7 +19,7 @@ namespace ExternalPortal.Api.Services
         private const string _base = "api/organization/";
         public OrganizationApiService(HttpClient client, IBus bus)
         {
-            client.BaseAddress = new Uri("http://localhost:37038/");
+            client.BaseAddress = new Uri("https://acmeorganization.azurewebsites.net/");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             _client = client;
             _bus = bus;
@@ -60,6 +60,18 @@ namespace ExternalPortal.Api.Services
                 addMember.Permission,
                 addMember.ChangeDate,
                 addMember.ChangedBy
+                );
+            await _bus.Send(command);
+        }
+
+        public async Task UpdateOrganizationMemberPermission(ChangeOrganizationMemberPermissionDto changePermission)
+        {
+            var command = new ChangeOrganizationMemberPermissionCommand(
+                changePermission.OrganizationId,
+                changePermission.Email,
+                changePermission.Permission,
+                changePermission.ChangeDate,
+                changePermission.ChangedBy
                 );
             await _bus.Send(command);
         }

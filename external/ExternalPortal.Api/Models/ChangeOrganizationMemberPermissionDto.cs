@@ -1,19 +1,15 @@
-﻿using ExternalPortal.Api.Converter;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace ExternalPortal.Api.Models
 {
-    public class AddOrganizationMemberDto
+    public class ChangeOrganizationMemberPermissionDto
     {
         [JsonProperty("organizationId")]
         public Guid OrganizationId { get; set; }
-        [JsonProperty("userName")]
-        public string UserName { get; set; }
         [JsonProperty("email")]
         public string Email { get; set; }
         [JsonProperty("permission")]
-        [JsonConverter(typeof(IntToStringConverter))]
         public int Permission { get; set; }
         [JsonProperty("changeDate")]
         public DateTime ChangeDate { get; set; }
