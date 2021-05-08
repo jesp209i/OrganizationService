@@ -2,9 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>9b3184e1-26ed-4cd9-bd03-50920224fbb0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Rebus" Version="6.5.5" />
     <PackageReference Include="Rebus.AzureServiceBus" Version="8.1.5" />
     <PackageReference Include="Rebus.ServiceProvider" Version="6.4.1" />
@@ -16,6 +20,10 @@
     <ProjectReference Include="..\OrganizationService.Infrastructure\OrganizationService.Infrastructure.csproj" />
     <ProjectReference Include="..\OrganizationService.Persistence\OrganizationService.Persistence.csproj" />
     <ProjectReference Include="..\OrganizationService.Shared.Messages\OrganizationService.Shared.Messages.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\index.html" />
   </ItemGroup>
 
 </Project>

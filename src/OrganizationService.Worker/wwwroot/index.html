@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Im fine, beaches</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <style>
+        body {
+            font-family: 'Roboto', serif;
+            background: #3399ff; 
+        }
+    </style>
+    <script>
+        var req = new XMLHttpRequest();
+
+        var options = { weekday: 'short', year: '2-digit', month: 'short', day: '2-digit', timeZoneName: 'short' };
+
+        req.onreadystatechange = function () {
+            var datetime = Date();
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("healthy").innerText = `${datetime.toLocaleString('da-DK', options)}: ${req.responseText}`;
+                document.title = "Worker is all good!";
+            } else {
+                document.getElementById("healthy").innerText = `${datetime.toLocaleString('da-DK', options)}: I haz ProblemZ`;
+                document.title = "Worker has Problems";
+            }
+        }
+        req.open("GET", "/healthcheck", true);
+        req.send();
+        
+    </script>
+</head>
+    <body>    
+        <h1>Organization Worker</h1>
+        <div id="healthy">Wait, i'm checking :) </div><br />
+        <img src="gears.gif" alt="running" />
+    </body>
+</html>

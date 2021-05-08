@@ -41,6 +41,9 @@ namespace OrganizationService.Worker
         {
             app.UseHealthChecks(Constants.Routes.HealthCheckPath);
             app.ApplicationServices.UseRebus();
+            //app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }
