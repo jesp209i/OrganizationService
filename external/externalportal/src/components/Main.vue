@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Hello</p>
+    <p>Hello, This site is for testing stuff</p>
   </div>
 </template>
 

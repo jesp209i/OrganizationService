@@ -6,9 +6,12 @@ const exports = {
     getOrganizations : getOrganizations,
     postCreateOrganization: postCreateOrganization,
     getOrganization: getOrganization,
-    postUpdateOrganizationWebsite : postUpdateOrganizationWebsite,
-    postUpdateOrganizationVatNumber: postUpdateOrganizationVatNumber,
-    postUpdateOrganizationAddress: postUpdateOrganizationAddress
+    postUpdateOrganizationWebsite : putUpdateOrganizationWebsite,
+    postUpdateOrganizationVatNumber: putUpdateOrganizationVatNumber,
+    postUpdateOrganizationAddress: putUpdateOrganizationAddress,
+    getOrganizationMembers: getOrganizationMembers,
+    postAddOrganizationMember: postAddOrganizationMember,
+    putOrganizationMemberPermission: putOrganizationMemberPermission
 }
 
 export default exports
@@ -18,9 +21,9 @@ async function getOrganizations(){
     return await axios.get(baseurl);
 }
 
-async function postUpdateOrganizationAddress(updateAddress, organizationId) {
+async function putUpdateOrganizationAddress(updateAddress, organizationId) {
     var request =  {
-        method: 'post',
+        method: 'put',
         url: `${baseurl}/${organizationId}/address`,
         data: updateAddress
     }
@@ -28,9 +31,9 @@ async function postUpdateOrganizationAddress(updateAddress, organizationId) {
     return await axios(request);
 }
 
-async function postUpdateOrganizationVatNumber(updateVatNumber, organizationId) {
+async function putUpdateOrganizationVatNumber(updateVatNumber, organizationId) {
     var request =  {
-        method: 'post',
+        method: 'put',
         url: `${baseurl}/${organizationId}/vatnumber`,
         data: updateVatNumber
     }
@@ -38,9 +41,9 @@ async function postUpdateOrganizationVatNumber(updateVatNumber, organizationId) 
     return await axios(request);
 }
 
-async function postUpdateOrganizationWebsite(updateWebsite, organizationId) {
+async function putUpdateOrganizationWebsite(updateWebsite, organizationId) {
     var request =  {
-        method: 'post',
+        method: 'put',
         url: `${baseurl}/${organizationId}/website`,
         data: updateWebsite
     }
@@ -60,4 +63,36 @@ async function postCreateOrganization(organization) {
 
 async function getOrganization(id){
     return await axios.get(baseurl+`/${id}`)
+}
+
+async function getOrganizationMembers(id){
+    return await axios.get(baseurl+`/${id}/members`);
+}
+
+async function postAddOrganizationMember(addMember, organizationId){
+
+    addMember.permission = Number(addMember.permission);
+
+
+    var request =  {
+        method: 'post',
+        url: `${baseurl}/${organizationId}/members`,
+        data: addMember
+    }
+
+    return await axios(request);
+}
+
+async function putOrganizationMemberPermission(user, organizationId){
+    var updateModel = user
+    delete updateModel.userName
+    updateModel.permission = Number(updateModel.permission)
+    updateModel.organizationId = organizationId
+    updateModel.changeDate =  new Date().toJSON()
+    var request = {
+        method: 'put',
+        url: `${baseurl}/${organizationId}/members/${user.email}`,
+        data: updateModel
+    }
+    return await axios(request);
 }

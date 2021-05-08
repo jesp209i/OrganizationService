@@ -8,7 +8,6 @@
           <mdb-navbar-nav>
             <mdb-nav-item to="/organizations">Organizations</mdb-nav-item>
             <mdb-nav-item to="/add">Add Organization</mdb-nav-item>
-            <mdb-nav-item to="/members">Members</mdb-nav-item>
           </mdb-navbar-nav>
         </mdb-navbar-toggler>
       </mdb-navbar>

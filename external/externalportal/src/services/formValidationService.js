@@ -2,10 +2,15 @@ const exports = {
     validateWebsiteForm: validateWebsiteForm,
     validateVatNumberForm : validateVatNumberForm,
     validateAddressForm : validateAddressForm,
-    validateCreateForm: validateCreateForm
+    validateCreateForm: validateCreateForm,
+    validateMemberForm: validateMemberForm
 }
 
 export default exports
+
+function validateMemberForm(form){
+    return validateForm(form)
+}
 
 function validateCreateForm(form){
     return validateAddressForm(form)

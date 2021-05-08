@@ -51,7 +51,7 @@
           })
       },
       detail(id){
-        this.$router.push({ path: `organization/${id}` })
+        this.$router.push({ path: `organization/${id}/info` })
       }
     },
     created() {
