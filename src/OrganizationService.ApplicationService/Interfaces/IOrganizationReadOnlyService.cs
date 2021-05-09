@@ -11,6 +11,6 @@ namespace OrganizationService.ApplicationService.Interfaces
         Task<OrganizationDto> GetOrganization(Guid id);
         Task<IEnumerable<OrganizationDto>> GetAll();
         Task<IEnumerable<OrganizationMemberDto>> GetOrganizationMembers(Guid id);
-        Task<IEnumerable<OrganizationUserPermissionDto>> GetUserOrganizations(string email);
+        Task<IEnumerable<OrganizationDto>> GetUserOrganizations(string email);
     }
 }

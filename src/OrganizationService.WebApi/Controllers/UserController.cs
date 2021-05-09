@@ -20,10 +20,10 @@ namespace OrganizationService.WebApi.Controllers
         }
 
         [HttpGet("{email}")]
-        public async Task<IEnumerable<OrganizationUserPermission>> GetUserOrganizations(string email)
+        public async Task<IEnumerable<Organization>> GetUserOrganizations(string email)
         {
             var result = await _service.GetUserOrganizations(email);
-            return result.Select(x => new OrganizationUserPermission(x)).ToList();
+            return result.Select(x => new Organization(x)).ToList();
         }
     }
 }

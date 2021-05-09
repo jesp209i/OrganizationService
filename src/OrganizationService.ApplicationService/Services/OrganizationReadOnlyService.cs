@@ -36,14 +36,11 @@ namespace OrganizationService.ApplicationService.Services
             return members;
         }
 
-        public async Task<IEnumerable<OrganizationUserPermissionDto>> GetUserOrganizations(string email)
+        public async Task<IEnumerable<OrganizationDto>> GetUserOrganizations(string email)
         {
             var orgs = await ReadOnlyPersistence.GetUserOrganizationsByEmail(email);
-            return orgs.Select(x => new OrganizationUserPermissionDto { 
-                OrganizationId = x.Organization.Id,
-                OrganizationName = x.Organization.Name,
-                Permission = (Permission) x.Permission
-            } ).ToList();
+            return orgs.Select(x => DtoMapper.Map(x.Organization).ToDto()
+            ).ToList();
         }
     }
 }
