@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ExternalPortal.Api.Services
 {
@@ -19,7 +20,7 @@ namespace ExternalPortal.Api.Services
         private const string _base = "api/organization/";
         public OrganizationApiService(HttpClient client, IBus bus)
         {
-            client.BaseAddress = new Uri("https://acmeorganization.azurewebsites.net/");
+            client.BaseAddress = new Uri("https://acmeorganizationworker.azurewebsites.net/");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             _client = client;
             _bus = bus;
@@ -34,6 +35,14 @@ namespace ExternalPortal.Api.Services
         public async Task<OrganizationDto> Get(Guid id)
         {
             var response = await GetAsync<OrganizationDto>(id.ToString());
+            return response;
+        }
+        public async Task<IEnumerable<OrganizationDto>> GetByEmail(SearchByEmail search)
+        {
+            var userUrl = $"api/user/{HttpUtility.UrlEncode(search.Email)}";
+            var request = await _client.GetAsync(userUrl);
+            var responsetext = await request.Content.ReadAsStringAsync();
+            var response = JsonConvert.DeserializeObject<List<OrganizationDto>>(responsetext);
             return response;
         }
 

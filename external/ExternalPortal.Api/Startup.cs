@@ -26,14 +26,16 @@ namespace ExternalPortal.Api
         {
             services.AddCors(options => 
             {
-                options.AddPolicy("ignoreCors",
+                //options.AddPolicy("ignoreCors",
+                options.AddDefaultPolicy(
                     builder =>
                     {
                         builder
-                        .WithOrigins("http://localhost:8081", "http://127.0.0.1:8081")
+                        //.WithOrigins("http://localhost:8081", "http://127.0.0.1:8081")
+                        .AllowAnyOrigin()
                         .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
+                        .AllowAnyMethod();
+                        //.AllowCredentials();
                     });
             });
             services.AddControllers();
@@ -66,10 +68,11 @@ namespace ExternalPortal.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors("ignoreCors");
+            //app.UseCors("ignoreCors");
+            app.UseCors();
             //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

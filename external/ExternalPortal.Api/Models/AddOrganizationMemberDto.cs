@@ -1,5 +1,4 @@
-﻿using ExternalPortal.Api.Converter;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace ExternalPortal.Api.Models
@@ -13,7 +12,6 @@ namespace ExternalPortal.Api.Models
         [JsonProperty("email")]
         public string Email { get; set; }
         [JsonProperty("permission")]
-        [JsonConverter(typeof(IntToStringConverter))]
         public int Permission { get; set; }
         [JsonProperty("changeDate")]
         public DateTime ChangeDate { get; set; }

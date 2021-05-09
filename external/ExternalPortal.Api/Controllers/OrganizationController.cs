@@ -80,5 +80,9 @@ namespace ExternalPortal.Api.Controllers
         {
             await _organizationApiService.UpdateVatNumber(id, updateName);
         }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> FindOrganizationsByEmail(SearchByEmail search) =>
+            Ok(await _organizationApiService.GetByEmail(search));
     }
 }
