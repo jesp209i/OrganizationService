@@ -1,0 +1,16 @@
+# OrganizationService worker and api
+version: '3.4'
+
+services:
+  organization_api:
+    image: "jesp209i/organizationserviceapi:1.0.1"
+    container_name: OrganizationServiceApi
+    ports:
+      - "80:80"
+  organization_worker:
+    image: "jesp209i/organizationserviceworker:1.0.0"
+    container_name: OrganizationServiceWorker
+    ports:
+      - "81:80"
+  
+

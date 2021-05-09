@@ -1,0 +1,15 @@
+# Externalstuff for OrganizationService
+version: '3.4'
+
+services:
+  organization_external_portal:
+    image: "jesp209i/organizationexternalportal:1.0.0"
+    container_name: externalportal
+    ports:
+      - "80:8080"
+  organization_external_api:
+    image: "jesp209i/organizationexternalapi:1.0.0"
+    container_name: ExternalApi
+    ports:
+      - "81:80"
+
