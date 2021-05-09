@@ -6,8 +6,8 @@
         </mdb-navbar-brand>
         <mdb-navbar-toggler>
           <mdb-navbar-nav>
-            <mdb-nav-item to="/organizations">Organizations</mdb-nav-item>
-            <mdb-nav-item to="/add">Add Organization</mdb-nav-item>
+            <mdb-nav-item to="/organizations/list">Organizations</mdb-nav-item>
+            <mdb-nav-item to="/search">Search</mdb-nav-item>
           </mdb-navbar-nav>
         </mdb-navbar-toggler>
       </mdb-navbar>

@@ -8,15 +8,28 @@ import OrganizationDetail from '@/components/Organization/OrganizationDetail'
 import MemberList from '@/components/Members/MemberList'
 import OrganizationPage from '@/components/Organization/OrganizationPage'
 import NewMember from '@/components/Members/NewMember'
-
+import SearchOrganization from '@/components/Members/SearchOrganization'
+import Organizations from '@/components/Organizations'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
     mode: 'history',
     routes : [
       { path: '/', component: Main },
-      { path: '/organizations', component: OrganizationList },
-      { path: '/add', component: AddOrganization },
+      { path: '/organizations', 
+        component: Organizations,
+        children: [
+          {
+            path: "add",
+            component: AddOrganization
+          },
+          { 
+            path: "list",
+            component: OrganizationList
+          }
+        ]
+      },
+      { path: '/search', component: SearchOrganization },
       { 
         path: '/organization/:id', 
         component: OrganizationPage, 

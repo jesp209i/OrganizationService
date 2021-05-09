@@ -1,22 +1,26 @@
 <template>
-  <mdb-card class="w-75 mb-4">
-    <mdb-card-header>Name</mdb-card-header>
-    <mdb-card-body>
-      <mdb-card-text>{{ name }}</mdb-card-text>
-    </mdb-card-body>
-  </mdb-card>
+  <div>
+  <mdb-row>
+    <mdb-col col=1>
+      <strong>Name</strong>
+    </mdb-col>
+  </mdb-row>
+  <mdb-row>
+    <mdb-col col=1></mdb-col>
+    <mdb-col>
+      {{ name }}
+    </mdb-col>
+  </mdb-row>
+  </div>
 </template>
 
 <script>
-  import { mdbCard, mdbCardHeader, mdbCardBody, mdbCardText} from 'mdbvue';
+  import { mdbRow, mdbCol} from 'mdbvue';
   export default {
     name: 'OrganizationDetailName',
     props: ['name'],
     components: {
-      mdbCard,
-      mdbCardHeader,
-      mdbCardBody,
-      mdbCardText
+      mdbRow, mdbCol
     },
   }
 

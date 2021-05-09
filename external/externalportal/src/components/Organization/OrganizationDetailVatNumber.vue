@@ -1,24 +1,28 @@
 <template>
-  <mdb-card class="w-75 mb-4">
-    <mdb-card-header>VAT Number</mdb-card-header>
-    <mdb-card-body>
-      <mdb-card-text>
+<div>
+  <mdb-row>
+    <mdb-col><strong>VAT Number</strong></mdb-col>
+    </mdb-row>
+     <mdb-row>
+    <mdb-col col=1></mdb-col>
+    <mdb-col col=3>
         {{vatNumber}} 
-      </mdb-card-text>
+    </mdb-col>
+    <mdb-col>
       <mdb-btn color="primary" v-on:click="$emit('toggleVatNumber')">Edit VAT number</mdb-btn>
-    </mdb-card-body>
-  </mdb-card>
+      </mdb-col>
+    
+  </mdb-row>
+  </div>
 </template>
 <script>
-  import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardText, mdbBtn} from 'mdbvue';
+  import { mdbCol, mdbRow, mdbBtn} from 'mdbvue';
   export default {
     name: 'OrganizationDetail',
     props: ['vatNumber'],
     components: {
-      mdbCard,
-      mdbCardBody,
-      mdbCardHeader,
-      mdbCardText,
+      mdbCol,
+      mdbRow,
       mdbBtn
     },
   }

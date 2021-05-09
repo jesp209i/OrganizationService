@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <mdb-container>
+    <mdb-row>
+      <mdb-col>
+    <h2>Organization Details</h2>
     <div class="spinner-border" role="status" v-if="loaded === false">
       <span class="sr-only">Loading...</span>
     </div>
-    <div v-if="loaded">
-      <h2>Organization Details</h2>
-
+    <mdb-container v-if="loaded">
+      
         <component 
           v-bind:is="orgDetailName" 
           :name="organization.name" 
@@ -33,16 +35,24 @@
           :organizationId="orgId"
           v-on:toggleWebsite="toggleWebsite"></component>
 
-        <mdb-card class="w-75 mb-4">
-          <mdb-card-header>Latest change</mdb-card-header>
-          <mdb-list-group>
-            <mdb-list-group-item>{{ organization.changeDate }}</mdb-list-group-item>
-            <mdb-list-group-item>{{ organization.changedBy }}</mdb-list-group-item>
-          </mdb-list-group>
-        </mdb-card>  
-      
-    </div>
-  </div>
+<div>
+  <mdb-row>
+    <mdb-col><strong>Latest change:</strong></mdb-col>
+    </mdb-row>
+     <mdb-row>
+    <mdb-col col=1></mdb-col>
+    <mdb-col col=3>{{ organization.changeDate }}</mdb-col>
+     </mdb-row>
+      <mdb-row>
+        <mdb-col col=1></mdb-col>
+    <mdb-col col=3>
+            {{ organization.changedBy }}</mdb-col></mdb-row>
+</div>      
+
+    </mdb-container>
+      </mdb-col>
+    </mdb-row>
+  </mdb-container>
 </template>
 
 <script>
@@ -54,18 +64,12 @@
   import ChangeAddress from './ChangeAddress'
   import ChangeVatNumber from './ChangeVatNumber'
   import ChangeWebsite from './ChangeWebsite'
-  import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardTitle, mdbCardText, mdbListGroup,mdbListGroupItem } from 'mdbvue';
+  import { mdbContainer, mdbRow, mdbCol} from 'mdbvue';
 
   export default {
     name: 'OrganizationDetail',
     components: {
-      mdbCard,
-      mdbCardBody,
-      mdbCardHeader,
-      mdbCardTitle,
-      mdbCardText, 
-      mdbListGroup,
-      mdbListGroupItem
+ mdbContainer, mdbRow, mdbCol
     },
     data: () => ({
       loaded: false,
@@ -113,5 +117,7 @@
 </script>
 
 <style scoped>
-
+.col{
+  margin: 20px;
+}
 </style>

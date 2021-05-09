@@ -1,6 +1,13 @@
 import axios from 'axios'
 
-const baseurl = "http://localhost:46599/api/organization"
+//const port = "49156" // api run in vs
+const portdocker = "80" // api run in docker
+
+// const localdev = `http://localhost:${port}/api/organization`
+//const localdocker = `http://localhost:${portdocker}/api/organization`
+ const azure = `http://acmeorganization.azurewebsites.net:${portdocker}/api/organization`
+
+const baseurl = azure //"http://localhost:46599/api/organization"
 
 const exports = {
     getOrganizations : getOrganizations,
@@ -11,7 +18,8 @@ const exports = {
     postUpdateOrganizationAddress: putUpdateOrganizationAddress,
     getOrganizationMembers: getOrganizationMembers,
     postAddOrganizationMember: postAddOrganizationMember,
-    putOrganizationMemberPermission: putOrganizationMemberPermission
+    putOrganizationMemberPermission: putOrganizationMemberPermission,
+    postSearchOrganizations : postSearchOrganizations
 }
 
 export default exports
@@ -69,6 +77,17 @@ async function getOrganizationMembers(id){
     return await axios.get(baseurl+`/${id}/members`);
 }
 
+async function postSearchOrganizations(email){
+    var request = {
+        method: 'post',
+        url: `${baseurl}/search`,
+        data: {
+            email : email
+        }
+    }
+    return await axios(request);
+}
+
 async function postAddOrganizationMember(addMember, organizationId){
 
     addMember.permission = Number(addMember.permission);
@@ -84,15 +103,20 @@ async function postAddOrganizationMember(addMember, organizationId){
 }
 
 async function putOrganizationMemberPermission(user, organizationId){
+    
     var updateModel = user
     delete updateModel.userName
     updateModel.permission = Number(updateModel.permission)
     updateModel.organizationId = organizationId
     updateModel.changeDate =  new Date().toJSON()
+    
+    console.log(updateModel)
+    
     var request = {
         method: 'put',
         url: `${baseurl}/${organizationId}/members/${user.email}`,
         data: updateModel
     }
+    
     return await axios(request);
 }

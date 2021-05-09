@@ -1,25 +1,28 @@
 <template>
-  <mdb-card class="w-75 mb-4">
-    <mdb-card-header>Website</mdb-card-header>
-    <mdb-card-body>
-      <mdb-card-text>
+<div>
+  <mdb-row>
+    <mdb-col><strong>Website</strong></mdb-col>
+    </mdb-row>
+     <mdb-row>
+    <mdb-col col=1></mdb-col>
+    <mdb-col col=3>
         {{ website }}      
-        </mdb-card-text>
-      <mdb-btn color="primary" v-on:click="$emit('toggleWebsite')">Edit VAT number</mdb-btn>
-    </mdb-card-body>
-  </mdb-card>
+    </mdb-col>
+    <mdb-col>
+      <mdb-btn color="primary" v-on:click="$emit('toggleWebsite')">Edit Website</mdb-btn>
+    </mdb-col>
+  </mdb-row>
+  </div>
 </template>
 
 <script>
-import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardText, mdbBtn} from 'mdbvue';
+import { mdbCol, mdbRow, mdbBtn} from 'mdbvue';
   export default {
     name: 'OrganizationDetailWebsite',
     props: ['website'],
-        components: {
-      mdbCard,
-      mdbCardBody,
-      mdbCardHeader,
-      mdbCardText,
+    components: {
+      mdbCol,
+      mdbRow,
       mdbBtn
     },
   }

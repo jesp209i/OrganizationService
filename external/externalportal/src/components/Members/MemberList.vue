@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <mdb-container>
+    <mdb-row>
+      <mdb-col>
     <h2>Member List</h2>
     <div class="spinner-border" role="status" v-if="loaded === false">
       <span class="sr-only">Loading...</span>
     </div>
-    <mdb-container v-if="loaded === true" striped hover>
+    <mdb-container v-if="loaded === true">
 
       <mdb-row>
         <mdb-col>Email</mdb-col>
@@ -12,38 +14,46 @@
         <mdb-col>Permission</mdb-col>
         <mdb-col></mdb-col>
       </mdb-row>
-      <div v-for="item in list" :key="item.id"  class="border border-dark" >
-      <div  @click="toggle(item.email)">
+      <div v-for="item in list" :key="item.id">
+      <div  >
       <mdb-row >
         <mdb-col>{{ item.email }}</mdb-col>
         <mdb-col>{{ item.userName }}</mdb-col>
         <mdb-col>{{ permissionTexts[item.permission] }}</mdb-col>
-        <mdb-col class="clickable"> Change Permission</mdb-col>
+        <mdb-col>
+          <mdb-btn @click="toggle(item.email)">
+            <span v-if="show.includes(item.email) === false"><mdb-icon icon="edit" class="mr-1"/> Change</span>
+            <span v-if="show.includes(item.email) === true"><mdb-icon icon="cancel" class="mr-1"/> Close</span>
+          </mdb-btn>
+        </mdb-col>
         
       </mdb-row>
       </div>
-      <mdb-row v-if="show.includes(item.email)">
+      <mdb-row v-if="show.includes(item.email)" style="border-bottom: 2px solid #CCC;">
         <mdb-col >
-          <permission-select v-model="item.permission"></permission-select>
-          <mdb-input  label="Changed By" v-model="changedBy" />
-          <mdb-btn @click="updatePermission(item)">Update permission</mdb-btn>
-
+          <permission-select :permission="item.permission" v-model="item.permission"></permission-select>
+          </mdb-col><mdb-col>
+          <mdb-input  label="Changed By" v-model="changedBy">
+          <mdb-btn @click="updatePermission(item)" group slot="append" :disabled="changedBy.length < 1">Update permission</mdb-btn>
+          </mdb-input>
         </mdb-col>
       </mdb-row>
       </div>
     </mdb-container>
-  </div>
+      </mdb-col>
+    </mdb-row>
+  </mdb-container>
 </template>
 
 <script>
   import service from '../../services/organizationService'
   import PermissionSelect from '../HelperComponents/PermissionSelect'
-  import { mdbContainer, mdbRow, mdbCol, mdbBtn, mdbInput } from 'mdbvue';
+  import { mdbContainer, mdbRow, mdbCol, mdbBtn, mdbInput, mdbIcon } from 'mdbvue';
 
   export default {
     name: 'MemberList',
     components: {
-      mdbContainer, mdbRow, mdbCol, mdbBtn, mdbInput,
+      mdbContainer, mdbRow, mdbCol, mdbBtn, mdbInput, mdbIcon ,
       PermissionSelect
     },
     data: () => ({
@@ -68,7 +78,6 @@
         } else {
           this.show.push(email);
         }
-        console.log(this.show);
       },
       updatePermission(user){
         this.loaded = false

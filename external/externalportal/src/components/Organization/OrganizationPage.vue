@@ -7,7 +7,7 @@
         <mdb-nav-item :to="{ name: 'orgnewmember', params: {id: orgId }}">Add Member</mdb-nav-item> 
       </mdb-navbar-nav>
     </mdb-navbar>
-    <router-view></router-view>
+    <router-view></router-view>    
   </div>
 </template>
 <script>

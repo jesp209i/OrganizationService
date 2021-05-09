@@ -1,41 +1,26 @@
 <template>
-  <div>
-    <h2>List</h2>
+  <mdb-container>
+    <mdb-row>
+      <mdb-col>
+    <h2>Organization List</h2>
     <div class="spinner-border" role="status" v-if="loaded === false">
       <span class="sr-only">Loading...</span>
     </div>
-    <mdb-tbl v-if="loaded === true">
-      <mdb-tbl-head>
-      <tr>
-        
-        <th>Name</th>
-        <th>VAT Number</th>
-        <th>Country</th>
-        
-      </tr>
-      </mdb-tbl-head>
-      <mdb-tbl-body>
-      <tr v-for="item in list" :key="item.id" @click="detail(item.id)" class="clickable">
-        
-        <td>{{ item.name }}</td>
-        <td>{{ item.vatNumber }}</td>
-        <td>{{ item.country }}</td>
-        
-      </tr>
-      </mdb-tbl-body>
-    </mdb-tbl>
-  </div>
+    <organization-list-component :list="list" v-if="loaded === true"></organization-list-component>
+      </mdb-col>
+    </mdb-row>
+  </mdb-container>
 </template>
 
 <script>
   import service from '../services/organizationService'
-  import { mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
+  import { mdbContainer, mdbRow, mdbCol } from 'mdbvue'
+  
+  import OrganizationListComponent from './HelperComponents/OrganizationListComponent'
   export default {
     name: 'OrganizationList',
     components: {
-      mdbTbl,
-      mdbTblHead,
-      mdbTblBody
+      OrganizationListComponent, mdbContainer, mdbRow, mdbCol
     },
     data: () => ({
       list : [],
@@ -50,24 +35,14 @@
             this.loaded = true
           })
       },
-      detail(id){
-        this.$router.push({ path: `organization/${id}/info` })
-      }
     },
     created() {
       this.getOrganizations()
     }
   }
 </script>
-
 <style scoped>
-.clickable {
-  cursor: pointer;
+.col{
+  margin: 20px;
 }
-.clickable:hover {
-  background-color: #CCC;
-  color: white;
-  font-weight: 900;
-}
-
 </style>
