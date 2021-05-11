@@ -13,7 +13,7 @@ import Organizations from '@/components/Organizations'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    mode: 'history',
+    //mode: 'history',
     routes : [
       { path: '/', component: Main },
       { path: '/organizations', 

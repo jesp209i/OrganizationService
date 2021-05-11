@@ -1,41 +1,42 @@
 <template>
-<div>
-  <mdb-row>
-    <mdb-col ><strong>Address</strong></mdb-col>
-  </mdb-row>
-  <mdb-row>
-    <mdb-col col=1></mdb-col>
-    <mdb-col col=3>
-      <mdb-row><mdb-col>
-          {{street}}
-      </mdb-col></mdb-row>
-      <mdb-row  v-if="streetExtended"><mdb-col>
-        {{streetExtended}}
-      </mdb-col></mdb-row>
-      <mdb-row><mdb-col>
-        {{postalCode}}
-      </mdb-col></mdb-row>
-      <mdb-row><mdb-col>
-        {{city}}
-      </mdb-col></mdb-row>
-      <mdb-row><mdb-col>
-        {{country}}
-      </mdb-col></mdb-row>
-    </mdb-col>
-    <mdb-col>  
-      <mdb-btn color="primary" v-on:click="$emit('toggleAddress')">Edit Address</mdb-btn>
-    </mdb-col>
-  </mdb-row>
-  </div>
+  <detail-box-component title="Address">
+    <mdb-row>
+      <mdb-col col=1></mdb-col>
+      <mdb-col>
+        <mdb-row><mdb-col>
+            {{street}}
+        </mdb-col></mdb-row>
+        <mdb-row  v-if="streetExtended"><mdb-col>
+          {{streetExtended}}
+        </mdb-col></mdb-row>
+        <mdb-row><mdb-col>
+          {{postalCode}}
+        </mdb-col></mdb-row>
+        <mdb-row><mdb-col>
+          {{city}}
+        </mdb-col></mdb-row>
+        <mdb-row><mdb-col>
+          {{country}}
+        </mdb-col></mdb-row>
+      </mdb-col>
+    </mdb-row>
+    <template v-slot:actions >
+        <mdb-btn size="sm" color="primary" v-on:click="$emit('toggleAddress')">Change Address</mdb-btn>
+    </template>
+  
+  </detail-box-component>
 </template>
 
 <script>
+import DetailBoxComponent from '../HelperComponents/DetailBoxComponent'
   import { mdbRow, mdbCol, mdbBtn} from 'mdbvue';
+
   export default {
     name: 'OrganizationDetailAddress',
     props: ['street', 'streetExtended','postalCode', 'city', 'country'],
     components: {
-      mdbRow, mdbCol, mdbBtn
+      mdbRow, mdbCol, mdbBtn, DetailBoxComponent
+        
     },
   }
 

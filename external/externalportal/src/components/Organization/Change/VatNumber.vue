@@ -1,46 +1,42 @@
 <template>
-  <mdb-card class="w-75 mb-4">
-    <form @submit.prevent="submitForm">
-    <mdb-card-header>Changing Organization VAT Number</mdb-card-header>
-    <mdb-card-body>
-      <mdb-card-text>
-        <mdb-input  label="VAT number" v-model="form.vatNumber" />
-        <mdb-input  label="Changed By" v-model="form.changedBy" />
-        </mdb-card-text>
-      <mdb-btn color="warning" v-on:click="$emit('toggleVatNumber')">Abort</mdb-btn>
-      <mdb-btn color="primary" type="submit" :disabled="sending">
+  <detail-box-component title="Changing VAT number" changing>
+
+    <mdb-input  label="VAT number" v-model="form.vatNumber" />
+    <mdb-input  label="Changed By" v-model="form.changedBy" required ><small class="form-text text-muted">Required</small></mdb-input>
+    
+    <template v-slot:actions>
+      <mdb-btn size="sm" color="warning" v-on:click="$emit('toggleVatNumber')">Abort</mdb-btn>
+      <mdb-btn size="sm" color="primary" type="submit" :disabled="formDisabled" @click="submitForm">
         <div v-if="sending">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Sending...
         </div>
         <div v-if="!sending">Save change</div>
-        </mdb-btn>
-    </mdb-card-body>
-    </form>
-  </mdb-card>
+      </mdb-btn>
+    </template>
+    
+  </detail-box-component>
 </template>
 
 <script>
-  import organizationService from '../../services/organizationService'
-  import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardText, mdbBtn, mdbInput} from 'mdbvue';
-  import formValidationService from '../../services/formValidationService'
+  import organizationService from '../../../services/organizationService'
+  import {   mdbBtn, mdbInput} from 'mdbvue'
+  import formValidationService from '../../../services/formValidationService'
+  import DetailBoxComponent from '../../HelperComponents/DetailBoxComponent'
 
   export default {
     name: 'ChangeName',
     props: ['vatNumber', 'organizationId'],
     components: {
-      mdbCard,
-      mdbCardBody,
-      mdbCardHeader,
-      mdbCardText,
       mdbBtn,
-      mdbInput
+      mdbInput,
+        DetailBoxComponent
     },
     data: () => ({
       form : {
         vatNumber: null,
         changeDate: new Date().toJSON(),
-        changedBy: null
+        changedBy: ''
       },
       formErrors : null,
       sending: false
@@ -54,12 +50,6 @@
           }
         }
       },
-      clearForm () {
-        this.formErrors = null
-        this.form.vatNumber = null
-        this.form.changeDate= new Date().toJSON()
-        this.form.changedBy = null
-      },
       async saveForm () {
         this.sending = true
         
@@ -68,10 +58,9 @@
         .then( () => {
           window.setTimeout(() => {
 
-          }, 1000)
+          }, 5000)
           this.formSaved = true
           this.sending = false
-          this.clearForm()
         })
         .catch( error => {
           console.log(error)
@@ -81,6 +70,13 @@
     },
     created(){
       this.form.vatNumber = this.vatNumber
+    },
+    computed: {
+      formDisabled: function(){
+        if (this.sending === true || this.form.changedBy.lenght === 0)
+          return true;
+        return false;
+      }
     }
   }
 </script>

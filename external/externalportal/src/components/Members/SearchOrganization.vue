@@ -6,11 +6,11 @@
         <p>By searching on a Members email you can see which organizations they are part of</p>
       </mdb-col>
     </mdb-row>
-    <form @submit.prevent="submitForm">
+    
       <mdb-row>
-        <mdb-col col="7">
+        <mdb-col col="6">
           <mdb-input label="Email" v-model="email">
-            <mdb-btn color="primary" type="submit" :disabled="sending" group slot="append">
+            <mdb-btn color="primary" type="submit" :disabled="sending" group slot="append" @click="submitForm">
               <div v-if="sending">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Sending...
@@ -18,9 +18,10 @@
               <div v-if="!sending">Search</div>
             </mdb-btn>
           </mdb-input>
+          <small :class="['error', {'hidden' : emailError === false}]">Bad email :(</small>
         </mdb-col>
       </mdb-row>
-    </form>
+    
     <organization-list-component :list="list" v-if="loaded === true"></organization-list-component>
   </mdb-container> 
 </template>
@@ -43,7 +44,8 @@ export default {
     email : null,
     sending : false,
     loaded: false,
-    list: null
+    list: null,
+    emailError : false
   }),
   methods: {
     async submitForm(){
@@ -55,10 +57,27 @@ export default {
           this.list = response.data
           this.sending = false;
           this.loaded = true
+          this.emailError = false
           
         })
-      .catch(error => console.log(error))
+      .catch(err =>
+      { 
+        if (err.response.data.status === 400)
+          this.emailError = true;
+        this.sending = false;
+      })
     }
   }
 }
 </script>
+<style scoped>
+.col{
+  margin:20px;
+}
+.hidden {
+  display : none;
+}
+.error {
+  color: red;
+}
+</style>

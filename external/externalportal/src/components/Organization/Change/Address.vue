@@ -1,44 +1,40 @@
 <template>
-  <mdb-card class="w-75 mb-4">
-    <form @submit.prevent="submitForm">
-    <mdb-card-header>Changing Address</mdb-card-header>
-    <mdb-card-body>
-      <mdb-card-text>
+  <detail-box-component title="Changing Address" changing>
+    
+    
         <mdb-input  label="Street" v-model="form.street" />
         <mdb-input  label="Street Extended" v-model="form.streetExtended" />
         <mdb-input  label="Postal Code" v-model="form.postalCode" />
         <mdb-input  label="City" v-model="form.city" />
         <mdb-input  label="Country" v-model="form.country" />
-        <mdb-input  label="Changed By" v-model="form.changedBy" />
-        </mdb-card-text>
-      <mdb-btn color="warning" v-on:click="$emit('toggleAddress')">Abort</mdb-btn>
-      <mdb-btn color="primary" type="submit" :disabled="sending">
+        <mdb-input  label="Changed By" v-model="form.changedBy" ><small class="form-text text-muted">Required</small></mdb-input>
+        <template v-slot:actions>
+      <mdb-btn size="sm" color="warning" v-on:click="$emit('toggleAddress')">Abort</mdb-btn>
+      <mdb-btn size="sm" color="primary" type="submit" :disabled="sending" @click="submitForm">
         <div v-if="sending">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Sending...
         </div>
         <div v-if="!sending">Save change</div>
         </mdb-btn>
-    </mdb-card-body>
-    </form>
-  </mdb-card>
+        </template>
+  </detail-box-component>
 </template>
 
 <script>
-  import organizationService from '../../services/organizationService'
-  import { mdbCard, mdbCardBody, mdbCardHeader, mdbCardText, mdbBtn, mdbInput} from 'mdbvue';
-  import formValidationService from '../../services/formValidationService'
+  import organizationService from '../../../services/organizationService'
+  import {mdbBtn, mdbInput} from 'mdbvue';
+  import formValidationService from '../../../services/formValidationService'
+import DetailBoxComponent from '../../HelperComponents/DetailBoxComponent.vue';
 
   export default {
     name: 'ChangeAddress',
     props: ['street','streetExtended','postalCode','city','country', 'organizationId'],
     components: {
-      mdbCard,
-      mdbCardBody,
-      mdbCardHeader,
-      mdbCardText,
+
       mdbBtn,
-      mdbInput
+      mdbInput,
+        DetailBoxComponent
     },
     data: () => ({
       form : {
@@ -60,12 +56,6 @@
           this.saveForm()
         }
       },
-      clearForm () {
-        this.formErrors = null
-        this.form.vatNumber = null
-        this.form.changeDate= new Date().toJSON()
-        this.form.changedBy = null
-      },
       async saveForm () {
         this.sending = true
         
@@ -74,10 +64,10 @@
         .then( () => {
           window.setTimeout(() => {
 
-          }, 1000)
+          }, 5000)
           this.formSaved = true
           this.sending = false
-          this.clearForm()
+          
         })
         .catch( error => {
           console.log(error)

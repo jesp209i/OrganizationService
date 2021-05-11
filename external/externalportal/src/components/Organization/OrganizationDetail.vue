@@ -1,57 +1,60 @@
 <template>
   <mdb-container>
     <mdb-row>
-      <mdb-col>
+      <mdb-col style="margin:20px;">
     <h2>Organization Details</h2>
+    </mdb-col></mdb-row>
+
     <div class="spinner-border" role="status" v-if="loaded === false">
       <span class="sr-only">Loading...</span>
     </div>
-    <mdb-container v-if="loaded">
-      
-        <component 
-          v-bind:is="orgDetailName" 
-          :name="organization.name" 
-          ></component>
-
-        <component 
-          v-bind:is="orgDetailAddress" 
-          :street="organization.street" 
-          :streetExtended="organization.streetExtended"
-          :postalCode="organization.postalCode"
-          :city="organization.city"
-          :country="organization.country" 
-          :organizationId="orgId"
-          v-on:toggleAddress="toggleAddress"></component>
-
-        <component 
-          v-bind:is="orgDetailVatNumber" 
-          :vatNumber="organization.vatNumber" 
-          :organizationId="orgId"
-          v-on:toggleVatNumber="toggleVatNumber"></component>
-
-        <component 
-          v-bind:is="orgDetailWebsite" 
-          :website="organization.website"
-          :organizationId="orgId"
-          v-on:toggleWebsite="toggleWebsite"></component>
-
-<div>
-  <mdb-row>
-    <mdb-col><strong>Latest change:</strong></mdb-col>
-    </mdb-row>
-     <mdb-row>
-    <mdb-col col=1></mdb-col>
-    <mdb-col col=3>{{ organization.changeDate }}</mdb-col>
-     </mdb-row>
+    <div v-if="loaded">
       <mdb-row>
-        <mdb-col col=1></mdb-col>
-    <mdb-col col=3>
-            {{ organization.changedBy }}</mdb-col></mdb-row>
-</div>      
-
-    </mdb-container>
-      </mdb-col>
-    </mdb-row>
+        <mdb-col>
+          <mdb-row>
+            <mdb-col>
+              <organization-detail-name 
+                :name="organization.name" />
+            </mdb-col>
+          </mdb-row>
+          <mdb-row>
+            <mdb-col>
+            <component 
+              v-bind:is="orgDetailAddress" 
+              :street="organization.street" 
+              :streetExtended="organization.streetExtended"
+              :postalCode="organization.postalCode"
+              :city="organization.city"
+              :country="organization.country" 
+              :organizationId="orgId"
+              v-on:toggleAddress="toggleAddress" />
+            </mdb-col>
+          </mdb-row>
+          
+        </mdb-col>
+        <mdb-col>
+          <mdb-row><mdb-col>
+            <component 
+              v-bind:is="orgDetailVatNumber" 
+              :vatNumber="organization.vatNumber" 
+              :organizationId="orgId"
+              v-on:toggleVatNumber="toggleVatNumber" />
+          </mdb-col></mdb-row>
+          <mdb-row><mdb-col>
+            <component 
+              v-bind:is="orgDetailWebsite" 
+              :website="organization.website"
+              :organizationId="orgId"
+              v-on:toggleWebsite="toggleWebsite" />
+          </mdb-col></mdb-row>
+          <mdb-row><mdb-col>
+            <organization-detail-latest-change
+              :changeDate="organization.changeDate"
+              :changedBy="organization.changedBy" /> 
+          </mdb-col></mdb-row>
+        </mdb-col>
+      </mdb-row>
+    </div>
   </mdb-container>
 </template>
 
@@ -61,15 +64,20 @@
   import OrganizationDetailAddress from './OrganizationDetailAddress'
   import OrganizationDetailWebsite from './OrganizationDetailWebsite'
   import OrganizationDetailVatNumber from './OrganizationDetailVatNumber'
-  import ChangeAddress from './ChangeAddress'
-  import ChangeVatNumber from './ChangeVatNumber'
-  import ChangeWebsite from './ChangeWebsite'
+  import ChangeAddress from './Change/Address'
+  import ChangeVatNumber from './Change/VatNumber'
+  import ChangeWebsite from './Change/Website'
+  import OrganizationDetailLatestChange from './OrganizationDetailLatestChange'
   import { mdbContainer, mdbRow, mdbCol} from 'mdbvue';
+
+
 
   export default {
     name: 'OrganizationDetail',
     components: {
- mdbContainer, mdbRow, mdbCol
+ mdbContainer, mdbRow, mdbCol, OrganizationDetailName, OrganizationDetailLatestChange
+        
+        
     },
     data: () => ({
       loaded: false,
@@ -78,7 +86,8 @@
       orgDetailName : OrganizationDetailName,
       orgDetailAddress : OrganizationDetailAddress,
       orgDetailWebsite : OrganizationDetailWebsite,
-      orgDetailVatNumber : OrganizationDetailVatNumber
+      orgDetailVatNumber : OrganizationDetailVatNumber,
+      orgDetailChange : OrganizationDetailLatestChange
     }),
     methods :{
       toggleWebsite: function (){
@@ -116,8 +125,3 @@
   }
 </script>
 
-<style scoped>
-.col{
-  margin: 20px;
-}
-</style>

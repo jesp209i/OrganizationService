@@ -1,26 +1,23 @@
 <template>
-  <div>
-  <mdb-row>
-    <mdb-col col=1>
-      <strong>Name</strong>
-    </mdb-col>
-  </mdb-row>
+<detail-box-component title="Name">
   <mdb-row>
     <mdb-col col=1></mdb-col>
     <mdb-col>
       {{ name }}
     </mdb-col>
   </mdb-row>
-  </div>
+</detail-box-component>
+
 </template>
 
 <script>
+import DetailBoxComponent from '../HelperComponents/DetailBoxComponent'
   import { mdbRow, mdbCol} from 'mdbvue';
   export default {
     name: 'OrganizationDetailName',
     props: ['name'],
     components: {
-      mdbRow, mdbCol
+      mdbRow, mdbCol, DetailBoxComponent
     },
   }
 
