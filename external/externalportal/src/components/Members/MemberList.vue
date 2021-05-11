@@ -21,7 +21,7 @@
         <mdb-col>{{ item.userName }}</mdb-col>
         <mdb-col>{{ permissionTexts[item.permission] }}</mdb-col>
         <mdb-col>
-          <mdb-btn @click="toggle(item.email)">
+          <mdb-btn @click="toggle(item.email)" size="sm">
             <span v-if="show.includes(item.email) === false"><mdb-icon icon="edit" class="mr-1"/> Change</span>
             <span v-if="show.includes(item.email) === true"><mdb-icon icon="cancel" class="mr-1"/> Close</span>
           </mdb-btn>
