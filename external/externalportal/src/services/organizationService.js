@@ -1,13 +1,13 @@
 import axios from 'axios'
 
-//const port = "49156" // api run in vs
-const portdocker = "80" // api run in docker
+//const port = "46599" // api run in vs
+//const portdocker = "80" // api run in docker
 
 // const localdev = `http://localhost:${port}/api/organization`
 //const localdocker = `http://localhost:${portdocker}/api/organization`
- const azure = `http://acmeorganization.azurewebsites.net:${portdocker}/api/organization`
+ const azure = `https://acmeorganization.azurewebsites.net/api/organization`
 
-const baseurl = azure //"http://localhost:46599/api/organization"
+const baseurl = azure;
 
 const exports = {
     getOrganizations : getOrganizations,
