@@ -2,26 +2,26 @@
   <mdb-container>
     <mdb-row>
       <mdb-col>
-        <h2>Find Organization</h2> 
+        <h2>Search Organization by Member Email</h2> 
         <p>By searching on a Members email you can see which organizations they are part of</p>
       </mdb-col>
     </mdb-row>
     
-      <mdb-row>
-        <mdb-col col="6">
+      <mdb-row class="justify-content-md-center">
+        <mdb-col lg="6">
           <mdb-input label="Email" v-model="email">
-            <mdb-btn color="primary" type="submit" :disabled="sending" group slot="append" @click="submitForm">
+            <mdb-btn color="primary" type="submit" :disabled="sending || email.length < 1" group slot="append" @click="submitForm">
               <div v-if="sending">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                  Sending...
+                  Searching...
               </div>
               <div v-if="!sending">Search</div>
             </mdb-btn>
           </mdb-input>
-          <small :class="['error', {'hidden' : emailError === false}]">Bad email :(</small>
+          <div :class="['error', {'hidden' : emailError === false}]">Bad format on Email</div>
         </mdb-col>
       </mdb-row>
-    
+    <loading-screen :loading="sending" :error="error" />
     <organization-list-component :list="list" v-if="loaded === true"></organization-list-component>
   </mdb-container> 
 </template>
@@ -29,6 +29,7 @@
 import {mdbBtn, mdbInput, mdbContainer, mdbRow, mdbCol} from 'mdbvue'
 import service from '../../services/organizationService'
 import OrganizationListComponent from '../HelperComponents/OrganizationListComponent'
+import LoadingScreen from '../HelperComponents/LoadingScreen'
 
 export default {
   name: "SearchOrganization",
@@ -38,19 +39,22 @@ export default {
     mdbCol,
     mdbBtn,
     mdbInput,
-    OrganizationListComponent
+    OrganizationListComponent,
+    LoadingScreen
   },
   data: () => ({
-    email : null,
+    email : '',
     sending : false,
     loaded: false,
     list: null,
-    emailError : false
+    emailError : false,
+    error: false
   }),
   methods: {
     async submitForm(){
       this.sending = true
       this.loaded = false
+      this.emailError = false
       await service.postSearchOrganizations(this.email)
       .then(response => 
         {
@@ -64,6 +68,8 @@ export default {
       { 
         if (err.response.data.status === 400)
           this.emailError = true;
+        if (err.response.data.status >= 500)
+          this.error = true
         this.sending = false;
       })
     }
@@ -79,5 +85,8 @@ export default {
 }
 .error {
   color: red;
+  font-size: 150%;
+  font-weight: 900;
+  text-align:center;
 }
 </style>

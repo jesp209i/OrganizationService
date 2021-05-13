@@ -1,6 +1,6 @@
 <template>
   <mdb-container>
-    <loading-screen :loading="loaded === false"></loading-screen>
+    <loading-screen :loading="loaded === false" :error="error"></loading-screen>
     <div v-if="loaded">
     <mdb-row>
       <mdb-col style="margin:20px;">
@@ -88,7 +88,8 @@
       orgDetailAddress : OrganizationDetailAddress,
       orgDetailWebsite : OrganizationDetailWebsite,
       orgDetailVatNumber : OrganizationDetailVatNumber,
-      orgDetailChange : OrganizationDetailLatestChange
+      orgDetailChange : OrganizationDetailLatestChange,
+      error : false
     }),
     methods :{
       toggleWebsite: function (){
@@ -120,8 +121,10 @@
         { 
           this.organization = response.data
           this.orgId = response.data.id
-        })
-      this.loaded = true
+          this.loaded = true
+      }).catch(()=>{
+          this.error = true
+      })
     }
   }
 </script>

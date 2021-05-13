@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <p>Hello, This site is for testing stuff</p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p>Hello, This site is for testing stuff for my project.</p>
+        <p>Feel free to explore, if you submit something, only use fake data. Thanks :)</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,5 +16,7 @@
 </script>
 
 <style scoped>
-
+.col {
+  margin:20px;
+}
 </style>

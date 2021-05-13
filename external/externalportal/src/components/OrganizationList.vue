@@ -1,6 +1,6 @@
 <template>
   <mdb-container>
-    <loading-screen :loading="!loaded"></loading-screen>
+    <loading-screen :loading="!loaded" :error="error"></loading-screen>
     <mdb-row v-if="loaded === true">
       <mdb-col>
     <h2>Organization List</h2>
@@ -23,7 +23,8 @@
     },
     data: () => ({
       list : [],
-      loaded: false
+      loaded: false,
+      error : false
     }),
     methods: {
       getOrganizations() {
@@ -33,6 +34,7 @@
             this.list = response.data
             this.loaded = true
           })
+          .catch(()=> this.error = true)
       },
     },
     created() {

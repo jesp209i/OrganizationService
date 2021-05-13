@@ -62,31 +62,19 @@
           this.saveForm()
         }        
       },
-      clearForm () {
-        this.formErrors = null
-        this.form.userName = null
-        this.form.email = null
-        this.form.permission = 4
-        this.form.changeDate= new Date().toJSON()
-        this.form.changedBy = null
-      },
       async saveForm () {
         this.sending = true
         
         // Instead of this timeout, here you can call your API
         await organizationService.postAddOrganizationMember(this.form, this.form.organizationId)
         .then( () => {
-          window.setTimeout(() => {
-
-          }, 10000)
-          this.formSaved = true
-          this.sending = false
-          this.clearForm()
+          setTimeout(() => {
+            this.$router.push({ name: 'orgmembers', params: {id: this.form.organizationId }});
+          }, 5000)          
         })
         .catch( error => {
           console.log(error)
         });
-        this.$router.push({ name: 'orgmembers', params: {id: this.form.organizationId }});
       }
     },
     created() {

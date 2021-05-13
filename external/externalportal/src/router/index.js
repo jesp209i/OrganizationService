@@ -10,11 +10,13 @@ import OrganizationPage from '@/components/Organization/OrganizationPage'
 import NewMember from '@/components/Members/NewMember'
 import SearchOrganization from '@/components/Members/SearchOrganization'
 import Organizations from '@/components/Organizations'
+import LoadingScreen from '@/components/HelperComponents/LoadingScreen'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
     //mode: 'history',
     routes : [
+      { path: '/loading', component: LoadingScreen},
       { path: '/', component: Main },
       { path: '/organizations', 
         component: Organizations,
