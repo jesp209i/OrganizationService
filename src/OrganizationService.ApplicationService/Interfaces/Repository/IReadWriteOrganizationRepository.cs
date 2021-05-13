@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrganizationService.Persistence.Interfaces
+namespace OrganizationService.ApplicationService.Interfaces.Repository
 {
     public interface IReadWriteOrganizationRepository : IReadOnlyOrganizationRepository, IWriteOnlyOrganizationRepository
     {

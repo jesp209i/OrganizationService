@@ -1,23 +1,39 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using OrganizationService.Infrastructure.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using OrganizationService.ApplicationService.Interfaces.Repository;
+using OrganizationService.Infrastructure.Repositories;
 
 namespace OrganizationService.Infrastructure.Extensions
 {
     public static class IServiceCollectionExtension
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IOrganizationPersistenceAdapter,OrganizationPersistenceAdapter>();
-            
+            services.AddDbContext<OrganizationDbContext>(options =>
+            {
+                var conStr = configuration[Constants.EnvironmentVariables.DatabaseConnectionString];
+                options.UseSqlServer(conStr,
+                    b => b.MigrationsAssembly(typeof(OrganizationDbContext).FullName));
+            });
+
+            services.AddScoped<IReadWriteOrganizationRepository, ReadWriteOrganizationRepository>();
+            //services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
+
             return services;
         }
 
-        public static IServiceCollection AddReadOnlyInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddReadOnlyInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IReadOnlyOrganizationPersistenceAdapter, ReadOnlyOrganizationPersistenceAdapter>();
+            services.AddDbContext<OrganizationDbContext>(options => 
+            {
+                var conStr = configuration[Constants.EnvironmentVariables.DatabaseConnectionString];
+                options.UseSqlServer(conStr,
+                    b => b.MigrationsAssembly(typeof(OrganizationDbContext).Assembly.FullName));
+            });
+
+            services.AddScoped<IReadOnlyOrganizationRepository, ReadOnlyOrganizationRepository>();
+            services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
 
             return services;
         }

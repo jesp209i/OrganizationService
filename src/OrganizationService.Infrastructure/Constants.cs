@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrganizationService.Persistence
+namespace OrganizationService.Infrastructure
 {
     public static class Constants
     {

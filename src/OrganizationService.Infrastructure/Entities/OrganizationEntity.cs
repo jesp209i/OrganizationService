@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrganizationService.Persistence.Entities
+namespace OrganizationService.Infrastructure.Entities
 {
     public class OrganizationEntity
     {

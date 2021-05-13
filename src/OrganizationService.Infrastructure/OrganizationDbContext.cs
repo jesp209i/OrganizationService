@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrganizationService.Persistence.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using OrganizationService.Infrastructure.Entities;
 
-namespace OrganizationService.Persistence
+namespace OrganizationService.Infrastructure
 {
     public class OrganizationDbContext : DbContext
     {
