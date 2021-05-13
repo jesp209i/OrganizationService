@@ -1,12 +1,10 @@
 <template>
   <mdb-container>
-    <mdb-row>
+    <loading-screen :loading="loaded === false"></loading-screen>
+    <mdb-row  v-if="loaded === true">
       <mdb-col>
     <h2>Member List</h2>
-    <div class="spinner-border" role="status" v-if="loaded === false">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <mdb-container v-if="loaded === true">
+    <mdb-container>
 
       <mdb-row>
         <mdb-col>Email</mdb-col>
@@ -49,12 +47,13 @@
   import service from '../../services/organizationService'
   import PermissionSelect from '../HelperComponents/PermissionSelect'
   import { mdbContainer, mdbRow, mdbCol, mdbBtn, mdbInput, mdbIcon } from 'mdbvue';
+  import LoadingScreen from '../HelperComponents/LoadingScreen'
 
   export default {
     name: 'MemberList',
     components: {
       mdbContainer, mdbRow, mdbCol, mdbBtn, mdbInput, mdbIcon ,
-      PermissionSelect
+      PermissionSelect, LoadingScreen
     },
     data: () => ({
       loaded: false,

@@ -1,26 +1,25 @@
 <template>
   <mdb-container>
-    <mdb-row>
+    <loading-screen :loading="!loaded"></loading-screen>
+    <mdb-row v-if="loaded === true">
       <mdb-col>
     <h2>Organization List</h2>
-    <div class="spinner-border" role="status" v-if="loaded === false">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <organization-list-component :list="list" v-if="loaded === true"></organization-list-component>
+    <organization-list-component :list="list" ></organization-list-component>
       </mdb-col>
     </mdb-row>
+    
   </mdb-container>
 </template>
 
 <script>
   import service from '../services/organizationService'
   import { mdbContainer, mdbRow, mdbCol } from 'mdbvue'
-  
+  import LoadingScreen from './HelperComponents/LoadingScreen'
   import OrganizationListComponent from './HelperComponents/OrganizationListComponent'
   export default {
     name: 'OrganizationList',
     components: {
-      OrganizationListComponent, mdbContainer, mdbRow, mdbCol
+      OrganizationListComponent, mdbContainer, mdbRow, mdbCol, LoadingScreen
     },
     data: () => ({
       list : [],

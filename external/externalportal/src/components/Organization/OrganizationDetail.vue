@@ -1,14 +1,13 @@
 <template>
   <mdb-container>
+    <loading-screen :loading="loaded === false"></loading-screen>
+    <div v-if="loaded">
     <mdb-row>
       <mdb-col style="margin:20px;">
     <h2>Organization Details</h2>
-    </mdb-col></mdb-row>
-
-    <div class="spinner-border" role="status" v-if="loaded === false">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div v-if="loaded">
+    </mdb-col>
+    </mdb-row>
+    
       <mdb-row>
         <mdb-col>
           <mdb-row>
@@ -69,13 +68,15 @@
   import ChangeWebsite from './Change/Website'
   import OrganizationDetailLatestChange from './OrganizationDetailLatestChange'
   import { mdbContainer, mdbRow, mdbCol} from 'mdbvue';
+  import LoadingScreen from '../HelperComponents/LoadingScreen'
 
 
 
   export default {
     name: 'OrganizationDetail',
     components: {
- mdbContainer, mdbRow, mdbCol, OrganizationDetailName, OrganizationDetailLatestChange
+ mdbContainer, mdbRow, mdbCol, OrganizationDetailName, OrganizationDetailLatestChange,
+        LoadingScreen
         
         
     },
