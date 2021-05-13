@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrganizationService.ApplicationService.Extensions;
 using OrganizationService.Infrastructure.Extensions;
-using OrganizationService.Persistence.Extensions;
 
 namespace OrganizationService.WebApi
 {
@@ -24,8 +23,7 @@ namespace OrganizationService.WebApi
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddReadOnlyApplicationServices();
-            services.AddReadOnlyInfrastructure();
-            services.AddReadOnlyPersistence(Configuration);
+            services.AddReadOnlyInfrastructure(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -23,6 +23,7 @@ namespace OrganizationService.Worker.Handlers.OrganizationMember
 
         public async Task Handle(ChangeOrganizationMemberPermissionCommand message)
         {
+            _logger.Log(LogLevel.Information, "ChangeOrganizationMemberPermissionCommandHandler invoked");
             var changePermission = new ChangeOrganizationMemberPermissionDto { 
                 OrganizationId = message.OrganizationId,
                 Email = message.MemberEmail,

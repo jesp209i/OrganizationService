@@ -3,11 +3,9 @@ using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.Domain;
 using OrganizationService.Domain.Enum;
 using OrganizationService.Domain.ValueObjects;
-using OrganizationService.Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OrganizationService.ApplicationService
 {
@@ -26,8 +24,7 @@ namespace OrganizationService.ApplicationService
             return _input switch
             {
                 Organization org => DomainToDto(org),
-                OrganizationEntity entity => EntityToDto(entity),
-                _ => throw new ArgumentException("input must be either domain or entity to make a Dto"),
+                _ => throw new ArgumentException("input must be domain to make a Dto"),
             };
         }
 
@@ -54,20 +51,9 @@ namespace OrganizationService.ApplicationService
             _input switch
             {
                 Organization org => OrganizationMemberDomainToDto(org),
-                OrganizationEntity orgEntity => OrganizationMemberEntityToDto(orgEntity),
                 _ => throw new ArgumentException("input must be either domain or entity to make a Dto"),
             };            
         
-
-        private List<OrganizationMemberDto> OrganizationMemberEntityToDto(OrganizationEntity entity)
-        {
-            return entity.Members.Select(x => new OrganizationMemberDto { 
-                OrganizationId = x.OrganizationId,
-                UserName = x.UserName,
-                Email = x.Email,
-                Permission = (Permission)x.Permission
-            }).ToList();
-        }
 
         private List<OrganizationMemberDto> OrganizationMemberDomainToDto(Organization org)
         {
@@ -95,26 +81,6 @@ namespace OrganizationService.ApplicationService
                 Website = org.Website,
                 ChangedBy = org.ChangedBy,
                 ChangeDate = org.ChangeDate
-            };
-
-            return organizationDto;
-        }
-        
-        private OrganizationDto EntityToDto(OrganizationEntity entity)
-        {
-            var organizationDto = new OrganizationDto
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                Street = entity.Street,
-                StreetExtended = entity.StreetExtended,
-                PostalCode = entity.PostalCode,
-                City = entity.City,
-                Country = entity.Country,
-                VatNumber = entity.VatNumber,
-                Website = entity.Website,
-                ChangedBy = entity.ChangedBy,
-                ChangeDate = entity.ChangeDate
             };
 
             return organizationDto;

@@ -24,8 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OrganizationService.Domain\OrganizationService.Domain.csproj" />
-    <ProjectReference Include="..\..\src\OrganizationService.Infrastructure\OrganizationService.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\src\OrganizationService.Persistence\OrganizationService.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\OrganizationService.Persistence\OrganizationService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

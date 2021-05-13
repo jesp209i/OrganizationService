@@ -1,10 +1,8 @@
-using AutoFixture;
-using AutoFixture.Xunit2;
 using FluentAssertions;
 using InfrastructureTest.Helpers;
 using OrganizationService.Domain;
-using OrganizationService.Infrastructure;
-using OrganizationService.Persistence.Entities;
+using OrganizationService.Infrastructure.Mapper;
+using OrganizationService.Infrastructure.Entities;
 using Xunit;
 
 namespace InfrastructureTest
