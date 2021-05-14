@@ -10,20 +10,23 @@ namespace OrganizationService.ApplicationService.Services
     public class OrganizationWorkerService : IOrganizationWorkerService
     {
         private readonly IReadWriteOrganizationRepository _organizationRepository;
-        public OrganizationWorkerService(IReadWriteOrganizationRepository organizationRepository)
+        private readonly DtoMapper _mapper;
+
+        public OrganizationWorkerService(IReadWriteOrganizationRepository organizationRepository, DtoMapper mapper)
         {
             _organizationRepository = organizationRepository;
+            _mapper = mapper;
         }
 
         public async Task AddOrganization(OrganizationDto model)
         {
-            var org = DtoMapper.Map(model).ToDomain();
+            var org = _mapper.Map(model).ToDomain();
             await _organizationRepository.AddOrganization(org);
         }
 
         public async Task UpdateOrganization(OrganizationDto model)
         {
-            var organization = DtoMapper.Map(model).ToDomain();
+            var organization = _mapper.Map(model).ToDomain();
             await _organizationRepository.UpdateAsync(organization);
         }
 

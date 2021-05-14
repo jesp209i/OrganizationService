@@ -11,12 +11,12 @@ namespace OrganizationService.ApplicationService
 {
     public class DtoMapper
     {
-        private readonly object _input;
+        private object _input;
 
-        public static DtoMapper Map(object input) => new DtoMapper(input);
-        private DtoMapper(object input)
+        public DtoMapper Map(object input)
         {
             _input = input;
+            return this;
         }
 
         public OrganizationDto ToDto()
