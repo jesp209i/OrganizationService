@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.Domain;
 using OrganizationService.Domain.Enum;
@@ -15,15 +16,22 @@ namespace OrganizationService.Infrastructure.Repositories
     public class ReadOnlyOrganizationMemberRepository :  IReadOnlyOrganizationMemberRepository
     {
         private readonly OrganizationDbContext _context;
+        private readonly IMapper<OrganizationMemberEntity, OrganizationMember> _mapper;
+        private readonly IMapper<OrganizationEntity, Organization> _orgDomainMapper;
 
-        public ReadOnlyOrganizationMemberRepository(OrganizationDbContext context)
+        public ReadOnlyOrganizationMemberRepository(
+            OrganizationDbContext context, 
+            IMapper<OrganizationMemberEntity, OrganizationMember> mapper,
+            IMapper<OrganizationEntity, Organization> orgDomainMapper)
         {
             _context = context;
+            _mapper = mapper;
+            _orgDomainMapper = orgDomainMapper;
         }
         public async Task<IEnumerable<OrganizationMember>> GetAllMembers()
         {
             var list = await _context.OrganizationMembers.ToListAsync();
-            return CreateMemberList(list);
+            return list.Select(x => _mapper.Map(x).ToOutFormat()).ToList();
         }
 
         public async Task<IEnumerable<Organization>> GetUserOrganizationsByEmail(string email)
@@ -34,14 +42,7 @@ namespace OrganizationService.Infrastructure.Repositories
                 .Select(m => m.Organization)
                 .ToListAsync();
 
-            return list.Select(x => PersistenceMapper.Map(x).ToDomain()).ToList();
+            return list.Select(x => _orgDomainMapper.Map(x).ToOutFormat()).ToList();
         }
-
-        private IEnumerable<OrganizationMember> CreateMemberList(IEnumerable<OrganizationMemberEntity> list)
-            => list.Select(x => BuildMember(x)).ToList();
-
-        private OrganizationMember BuildMember(OrganizationMemberEntity entity)
-            => new OrganizationMember(new OrganizationId(entity.OrganizationId), new Email(entity.Email), entity.UserName, (Permission)entity.Permission);
-        
     }
 }

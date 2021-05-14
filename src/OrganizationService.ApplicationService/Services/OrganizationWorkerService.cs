@@ -1,7 +1,9 @@
 ﻿using OrganizationService.ApplicationService.Interfaces;
+using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.ApplicationService.Models;
 using OrganizationService.ApplicationService.Models.OrganizationMember;
+using OrganizationService.Domain;
 using OrganizationService.Domain.ValueObjects;
 using System.Threading.Tasks;
 
@@ -10,9 +12,9 @@ namespace OrganizationService.ApplicationService.Services
     public class OrganizationWorkerService : IOrganizationWorkerService
     {
         private readonly IReadWriteOrganizationRepository _organizationRepository;
-        private readonly DtoMapper _mapper;
+        private readonly IMapper<OrganizationDto,Organization> _mapper;
 
-        public OrganizationWorkerService(IReadWriteOrganizationRepository organizationRepository, DtoMapper mapper)
+        public OrganizationWorkerService(IReadWriteOrganizationRepository organizationRepository, IMapper<OrganizationDto, Organization> mapper)
         {
             _organizationRepository = organizationRepository;
             _mapper = mapper;
@@ -20,13 +22,13 @@ namespace OrganizationService.ApplicationService.Services
 
         public async Task AddOrganization(OrganizationDto model)
         {
-            var org = _mapper.Map(model).ToDomain();
+            var org = _mapper.Map(model).ToOutFormat();
             await _organizationRepository.AddOrganization(org);
         }
 
         public async Task UpdateOrganization(OrganizationDto model)
         {
-            var organization = _mapper.Map(model).ToDomain();
+            var organization = _mapper.Map(model).ToOutFormat();
             await _organizationRepository.UpdateAsync(organization);
         }
 
