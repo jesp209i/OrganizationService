@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrganizationService.Persistence.Exceptions
+namespace OrganizationService.Infrastructure.Exceptions
 {
     public class EntityNotFoundException : ArgumentException
     {

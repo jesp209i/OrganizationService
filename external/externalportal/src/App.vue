@@ -2,7 +2,7 @@
   <mdb-container>
       <mdb-navbar color="indigo" dark>
         <mdb-navbar-brand to="/"> 
-          Site
+          Test Portal
         </mdb-navbar-brand>
         <mdb-navbar-toggler>
           <mdb-navbar-nav>

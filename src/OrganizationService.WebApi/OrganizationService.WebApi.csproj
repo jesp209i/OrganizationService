@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\OrganizationService.ApplicationService\OrganizationService.ApplicationService.csproj" />
     <ProjectReference Include="..\OrganizationService.Infrastructure\OrganizationService.Infrastructure.csproj" />
-    <ProjectReference Include="..\OrganizationService.Persistence\OrganizationService.Persistence.csproj" />
   </ItemGroup>
 
 

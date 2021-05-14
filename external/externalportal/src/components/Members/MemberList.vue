@@ -1,6 +1,6 @@
 <template>
   <mdb-container>
-    <loading-screen :loading="loaded === false"></loading-screen>
+    <loading-screen :loading="loaded === false" :error="error"></loading-screen>
     <mdb-row  v-if="loaded === true">
       <mdb-col>
     <h2>Member List</h2>
@@ -30,9 +30,16 @@
       <mdb-row v-if="show.includes(item.email)" style="border-bottom: 2px solid #CCC;">
         <mdb-col >
           <permission-select :permission="item.permission" v-model="item.permission"></permission-select>
-          </mdb-col><mdb-col>
-          <mdb-input  label="Changed By" v-model="changedBy">
-          <mdb-btn @click="updatePermission(item)" group slot="append" :disabled="changedBy.length < 1">Update permission</mdb-btn>
+          </mdb-col>
+          <mdb-col>
+            <mdb-input  label="Changed By" v-model="changedBy">
+            <mdb-btn @click="updatePermission(item)" group slot="append" :disabled="changedBy.length < 1 || sending == true">
+              <div v-if="sending">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Updating...
+              </div><div v-if="sending === false">
+              Update permission</div>
+            </mdb-btn>
           </mdb-input>
         </mdb-col>
       </mdb-row>
@@ -60,7 +67,9 @@
       orgId : 0,
       permissionTexts : ['SuperAdmin', 'Admin', 'ReadWrite', 'ReadOnly', 'NoAccess'],
       show: [],
-      changedBy : ""
+      changedBy : "",
+      sending : false,
+      error : false
     }),
     methods: {
       getAllMembers(id) {
@@ -69,7 +78,9 @@
           {
             this.list = response.data
             this.loaded = true
-          })
+          }).catch(
+            () => this.error = true
+          )
       },
       toggle(email){
         if (this.show.includes(email)){
@@ -79,15 +90,18 @@
         }
       },
       updatePermission(user){
-        this.loaded = false
+        this.sending = true;
         user.changedBy = this.changedBy
         service.putOrganizationMemberPermission(user,this.orgId)
         .then(() => {
           window.setTimeout(() => {
-        }, 6000)
+            this.loaded = false
+            this.getAllMembers(this.orgId)
+            this.toggle(user.email)
+            this.sending = false
+        }, 5000)
         }).catch(error =>
         console.log(error))
-        this.$router.go(0)
       }
     },
     created() {

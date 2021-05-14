@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\OrganizationService.ApplicationService\OrganizationService.ApplicationService.csproj" />
     <ProjectReference Include="..\OrganizationService.Infrastructure\OrganizationService.Infrastructure.csproj" />
-    <ProjectReference Include="..\OrganizationService.Persistence\OrganizationService.Persistence.csproj" />
     <ProjectReference Include="..\OrganizationService.Shared.Messages\OrganizationService.Shared.Messages.csproj" />
   </ItemGroup>
 
