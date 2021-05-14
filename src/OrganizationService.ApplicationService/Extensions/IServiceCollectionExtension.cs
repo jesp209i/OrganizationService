@@ -9,6 +9,7 @@ namespace OrganizationService.ApplicationService.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IOrganizationWorkerService, OrganizationWorkerService>();
+            services.AddTransient<DtoMapper>();
 
             return services;
         }
@@ -16,6 +17,7 @@ namespace OrganizationService.ApplicationService.Extensions
         public static IServiceCollection AddReadOnlyApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IOrganizationReadOnlyService, OrganizationReadOnlyService>();
+            services.AddTransient<DtoMapper>();
 
             return services;
         }
