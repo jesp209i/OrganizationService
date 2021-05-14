@@ -22,4 +22,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutput='./result.json'
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+    - name: 'Publish Code Coverage Results'
+      run: 'Cobertura $(Agent.TempDirectory)/**/coverage.cobertura.xml'
