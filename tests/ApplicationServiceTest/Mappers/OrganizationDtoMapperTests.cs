@@ -11,7 +11,7 @@ namespace ApplicationServiceTest.Mappers
     public class OrganizationDtoMapperTests
     {
         [Theory, EntityAutoData]
-        public void Hest(Organization organization)
+        public void OrganizationDtoMapper_Domain_ReturnsDto(Organization organization)
         {
             //Arrange
             IMapper<Organization, OrganizationDto> mapper = new OrganizationDtoMapper();

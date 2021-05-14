@@ -41,7 +41,7 @@ namespace OrganizationService.Infrastructure.Mapper
         {
             if (members.Count == 0)
                 return new List<OrganizationMember>();
-
+           
             return members.Select(x => _memberMapper.Map(x).ToOutFormat()).ToList();
         }
     }

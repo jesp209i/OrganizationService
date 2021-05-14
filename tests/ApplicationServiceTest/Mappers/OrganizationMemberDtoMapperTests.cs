@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
-using InfrastructureTest.Helpers;
+using ApplicationServiceTest.Helpers;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Mapper;
 using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.Domain.ValueObjects;
 using Xunit;
 
-namespace InfrastructureTest.Mappers
+namespace ApplicationServiceTest.Mappers
 {
-    public class OrganizationMapperDtoMapperTests
+    public class OrganizationMemberDtoMapperTests
     {
         [Theory, EntityAutoData]
-        public void Hest(OrganizationMember member)
+        public void OrganizationMemberDtoMapper_Domain_ReturnsDto(OrganizationMember member)
         {
             //Arrange
             IMapper<OrganizationMember, OrganizationMemberDto> mapper = new OrganizationMemberDtoMapper();

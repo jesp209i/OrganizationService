@@ -1,48 +1,75 @@
-﻿using AutoFixture.Xunit2;
-using FluentAssertions;
+﻿using FluentAssertions;
+using InfrastructureTest.Helpers;
+using Moq;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
-using OrganizationService.ApplicationService.Mapper;
-using OrganizationService.ApplicationService.Models;
-using OrganizationService.Domain;
+using OrganizationService.Domain.ValueObjects;
+using OrganizationService.Infrastructure.Entities;
+using OrganizationService.Infrastructure.Mapper;
 using Xunit;
 
 namespace InfrastructureTest.Mappers
 {
     public class OrganizationDomainMapperTests
     {
-        [Theory, AutoData]
-        public void Hest(OrganizationDto organizationDto)
+        [Theory, OrganizationEntityNoMemberAutoData]
+        public void OrganizationDomainMapper_Entity_ReturnsDomain(OrganizationEntity organizationEntity, OrganizationMember orgMember)
         {
             //Arrange
-            IMapper<OrganizationDto, Organization> mapper = new OrganizationDomainMapper();
+            var memberMapper = new Mock<IMapper<OrganizationMemberEntity, OrganizationMember>>();
+            memberMapper.Setup(x => x.Map(It.IsAny<OrganizationMemberEntity>())).Returns(memberMapper.Object);
+            memberMapper.Setup(x => x.ToOutFormat()).Returns(orgMember);
+
+            var sut = new OrganizationDomainMapper(memberMapper.Object);
 
             //Act
-            var org = mapper.Map(organizationDto).ToOutFormat();
+            var actual = sut.Map(organizationEntity).ToOutFormat();
 
-            //Actual
-            //   --- OrganizationId
-            org.Id.Id.Should().Be(organizationDto.Id);
+            //Assert
+            actual.Id.Should().BeEquivalentTo(organizationEntity, options => options.ExcludingMissingMembers());
+            actual.Name.Should().BeEquivalentTo(organizationEntity, options => options.ExcludingMissingMembers());
+            actual.Address.Should().BeEquivalentTo(organizationEntity, options => options.ExcludingMissingMembers());
+            actual.VatNumber.Should().BeEquivalentTo(organizationEntity, options => options.ExcludingMissingMembers());
+            actual.Website.Should().Be(organizationEntity.Website);
+            actual.ChangeDate.Should().Be(organizationEntity.ChangeDate);
+            actual.ChangedBy.Should().Be(organizationEntity.ChangedBy);
+        }
 
-            //   --- OrganizationName
-            org.Name.Name.Should().Be(organizationDto.Name);
+        [Theory, EntityAutoData]
+        public void OrganizationDomainMapper_EntityWithMembers_ReturnsDomainIncludingMembers(OrganizationEntity organizationEntity, OrganizationMember orgMember)
+        {
+            //Arrange
+            var memberMapper = new Mock<IMapper<OrganizationMemberEntity, OrganizationMember>>();
+            memberMapper.Setup(x => x.Map(It.IsAny<OrganizationMemberEntity>())).Returns(memberMapper.Object);
+            memberMapper.Setup(x => x.ToOutFormat()).Returns(orgMember);
 
-            //   --- Address
-            org.Address.Street.Should().Be(organizationDto.Street);
-            org.Address.StreetExtended.Should().Be(organizationDto.StreetExtended);
-            org.Address.PostalCode.Should().Be(organizationDto.PostalCode);
-            org.Address.City.Should().Be(organizationDto.City);
-            org.Address.Country.Should().Be(organizationDto.Country);
+            var sut = new OrganizationDomainMapper(memberMapper.Object);
 
-            //   --- VatNumber
-            org.VatNumber.VatNumberString.Should().Be(organizationDto.VatNumber);
+            //Act
+            var memberCount = organizationEntity.Members.Count;
+            var actual = sut.Map(organizationEntity).ToOutFormat();
 
-            //   --- Website
-            org.Website.Should().Be(organizationDto.Website);
+            //Assert
+            actual.Members.Should().HaveCount(memberCount);
+            memberMapper.Verify(x=> x.Map(It.IsAny<OrganizationMemberEntity>()), Times.Exactly(memberCount));
+        }
 
+        [Theory, OrganizationEntityNoMemberAutoData]
+        public void OrganizationDomainMapper_EntityWithoutMembers_ReturnsDomain(OrganizationEntity organizationEntity, OrganizationMember orgMember)
+        {
+            //Arrange
+            var memberMapper = new Mock<IMapper<OrganizationMemberEntity, OrganizationMember>>();
+            memberMapper.Setup(x => x.Map(It.IsAny<OrganizationMemberEntity>())).Returns(memberMapper.Object);
+            memberMapper.Setup(x => x.ToOutFormat()).Returns(orgMember);
 
-            //   --- Meta
-            org.ChangeDate.Should().Be(organizationDto.ChangeDate);
-            org.ChangedBy.Should().Be(organizationDto.ChangedBy);
+            var sut = new OrganizationDomainMapper(memberMapper.Object);
+
+            //Act
+            var actual = sut.Map(organizationEntity).ToOutFormat();
+
+            //Assert
+            actual.Members.Should().HaveCount(0);
+
+            memberMapper.Verify(x => x.Map(It.IsAny<OrganizationMemberEntity>()), Times.Never);
         }
     }
 }

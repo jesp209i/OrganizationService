@@ -25,8 +25,10 @@ namespace OrganizationService.Infrastructure.Extensions
             services.AddScoped<IReadWriteOrganizationRepository, ReadWriteOrganizationRepository>();
             //services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
 
-            services.AddTransient<IMapper<Organization, OrganizationEntity>, OrganizationEntityMapper>();
             services.AddTransient<IMapper<OrganizationMember, OrganizationMemberEntity>, OrganizationMemberEntityMapper>();
+            services.AddTransient<IMapper<Organization, OrganizationEntity>, OrganizationEntityMapper>();
+            services.AddTransient<IMapper<OrganizationMemberEntity, OrganizationMember>, OrganizationMemberDomainMapper>();
+            services.AddTransient<IMapper<OrganizationEntity, Organization>, OrganizationDomainMapper>();
 
             return services;
         }
@@ -43,8 +45,8 @@ namespace OrganizationService.Infrastructure.Extensions
             services.AddScoped<IReadOnlyOrganizationRepository, ReadOnlyOrganizationRepository>();
             services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
 
-            services.AddTransient<IMapper<OrganizationEntity, Organization>, OrganizationDomainMapper>();
             services.AddTransient<IMapper<OrganizationMemberEntity, OrganizationMember>, OrganizationMemberDomainMapper>();
+            services.AddTransient<IMapper<OrganizationEntity, Organization>, OrganizationDomainMapper>();
 
             return services;
         }
