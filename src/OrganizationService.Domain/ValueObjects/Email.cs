@@ -6,14 +6,14 @@ namespace OrganizationService.Domain.ValueObjects
 {
     public class Email
     {
-        private string email;
+        private string _email;
         public string ActualEmail { 
-            get => email;
+            get => _email;
             private set 
             {
                 if (value.Contains("@") == false || string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException($"{typeof(Email)} requires a valid email");
-                email = value.ToLowerInvariant();
+                _email = value.ToLowerInvariant();
             } 
         }
         public Email(string email)

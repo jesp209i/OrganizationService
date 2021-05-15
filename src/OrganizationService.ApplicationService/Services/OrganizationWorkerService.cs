@@ -26,11 +26,13 @@ namespace OrganizationService.ApplicationService.Services
             await _organizationRepository.AddOrganization(org);
         }
 
+        /*
         public async Task UpdateOrganization(OrganizationDto model)
         {
             var organization = _mapper.Map(model).ToOutFormat();
             await _organizationRepository.UpdateAsync(organization);
         }
+        */
 
         public async Task ChangeOrganizationWebsite(ChangeOrganizationWebsiteDto changeModel)
         {
