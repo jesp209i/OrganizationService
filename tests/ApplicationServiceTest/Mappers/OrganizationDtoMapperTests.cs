@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using ApplicationServiceTest.Helpers;
+using TestHelper.ApplicationService;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Mapper;
 using OrganizationService.ApplicationService.Models;

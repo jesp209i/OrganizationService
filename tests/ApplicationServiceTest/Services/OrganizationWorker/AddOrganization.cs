@@ -1,7 +1,5 @@
-﻿using ApplicationServiceTest.Helpers;
-using AutoFixture.Xunit2;
+﻿using TestHelper.ApplicationService;
 using Moq;
-using OrganizationService.ApplicationService;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.ApplicationService.Models;
@@ -13,17 +11,17 @@ using Xunit;
 namespace ApplicationServiceTest.Services.OrganizationWorker
 {
     public class AddOrganization
-    {/*
+    {
         [Theory, EntityAutoData]
-        public async Task OrganizationAdded(OrganizationDto organizationDto, Organization organization)
+        public async Task AddOrganization_Success(OrganizationDto organizationDto, Organization organization)
         {
             //Arrange
             var repo = new Mock<IReadWriteOrganizationRepository>();
             repo.Setup(x => x.AddOrganization(It.IsAny<Organization>()));
 
-            var mapper = new Mock<IMapper<Organization>>();
-            mapper.Setup(m => m.Map(organizationDto));
-            mapper.Setup(m => m.ToDomain()).Returns(organization);
+            var mapper = new Mock<IMapper<OrganizationDto,Organization>>();
+            mapper.Setup(m => m.Map(organizationDto)).Returns(mapper.Object);
+            mapper.Setup(m => m.ToOutFormat()).Returns(organization);
 
             var service = new OrganizationWorkerService(repo.Object, mapper.Object);
 
@@ -33,6 +31,5 @@ namespace ApplicationServiceTest.Services.OrganizationWorker
             //Assert
             repo.Verify(x => x.AddOrganization(organization), Times.Once);
         }
-        */
     }    
 }

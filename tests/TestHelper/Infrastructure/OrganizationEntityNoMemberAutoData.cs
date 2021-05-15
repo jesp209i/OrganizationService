@@ -6,16 +6,16 @@ using OrganizationService.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace InfrastructureTest.Helpers
+namespace TestHelper.Infrastructure
 {
-    internal class OrganizationEntityNoMemberAutoData : AutoDataAttribute
+    public class OrganizationEntityNoMemberAutoData : AutoDataAttribute
     {
         public OrganizationEntityNoMemberAutoData() : base(() => new Fixture().Customize(new EntityAutoDataCustomization2()))
         {
         }
     }
 
-    internal class EntityAutoDataCustomization2 : ICustomization
+    public class EntityAutoDataCustomization2 : ICustomization
     {
         public void Customize(IFixture fixture)
         {

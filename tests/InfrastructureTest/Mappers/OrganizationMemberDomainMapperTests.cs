@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InfrastructureTest.Helpers;
+using TestHelper.Infrastructure;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.Domain.ValueObjects;
 using OrganizationService.Infrastructure.Entities;

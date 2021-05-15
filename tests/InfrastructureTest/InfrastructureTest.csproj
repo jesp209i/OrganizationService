@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.16.0" />
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.16.0" />
+    <PackageReference Include="AutoFixture" Version="4.17.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
     <PackageReference Include="coverlet.msbuild" Version="3.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,6 +30,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\OrganizationService.Domain\OrganizationService.Domain.csproj" />
     <ProjectReference Include="..\..\src\OrganizationService.Infrastructure\OrganizationService.Infrastructure.csproj" />
+    <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

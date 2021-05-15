@@ -1,4 +1,4 @@
-﻿using ApplicationServiceTest.Helpers;
+﻿using TestHelper.ApplicationService;
 using FluentAssertions;
 using Moq;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
