@@ -2,11 +2,8 @@
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.Domain;
-using OrganizationService.Domain.Enum;
 using OrganizationService.Domain.ValueObjects;
 using OrganizationService.Infrastructure.Entities;
-using OrganizationService.Infrastructure.Mapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

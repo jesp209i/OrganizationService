@@ -8,7 +8,7 @@ using OrganizationService.Infrastructure.Entities;
 using OrganizationService.Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TestHelper.Infrastructure;
+using TestHelper.FixtureAttributes;
 using Xunit;
 
 namespace InfrastructureTest.Repositories.ReadWriteOrganization

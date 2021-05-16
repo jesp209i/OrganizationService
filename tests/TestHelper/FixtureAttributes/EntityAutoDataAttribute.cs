@@ -2,9 +2,10 @@
 using AutoFixture.Xunit2;
 using OrganizationService.Domain.ValueObjects;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace TestHelper.ApplicationService
+namespace TestHelper.FixtureAttributes
 {
     public class EntityAutoDataAttribute : AutoDataAttribute
     {
@@ -17,22 +18,28 @@ namespace TestHelper.ApplicationService
     {
         public void Customize(IFixture fixture)
         {
-            fixture.Register(()=>
-                new Email(GenerateRandomEmail())
-                );
-
+            fixture.Register(() =>
+            new Email(GenerateRandomEmail())
+            );
             fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
                     .ForEach(b => fixture.Behaviors.Remove(b));
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             fixture.Customizations.Add(new OrganizationMemberGenerator());
         }
+        private List<string> usedMails = new List<string>();
         public string GenerateRandomEmail()
         {
-            string[] mailAliases = { "bubber", "jytte", "testhest", "andre", "jesper" };
-            string[] domains = { "example.com", "example.net", "example.org", "example.dk", "testhest.dk" };
+            string[] mailAliases = { "bubber", "jytte", "testhest", "andre", "jesper", "postkasse", "niller", "unique", "thesign", "mikey", "email" };
+            string[] domains = { "example.com", "example.net", "example.org", "example.dk", "testhest.dk", "example.co.uk", "example.de" };
             int dIndex = new Random().Next(domains.Length);
             int maIndex = new Random().Next(mailAliases.Length);
-            return $"{mailAliases[maIndex]}@{domains[dIndex]}";
+            var mail = $"{mailAliases[maIndex]}@{domains[dIndex]}";
+            if (usedMails.Contains(mail))
+            {
+                mail = GenerateRandomEmail();
+            }
+            usedMails.Add(mail);
+            return mail;
         }
     }
 }

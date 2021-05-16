@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OrganizationService.ApplicationService.Interfaces;
-using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.WebApi.Viewmodels;
 using System.Collections.Generic;
 using System.Linq;

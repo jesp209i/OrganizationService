@@ -1,9 +1,5 @@
 ﻿using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OrganizationService.WebApi.Viewmodels
 {

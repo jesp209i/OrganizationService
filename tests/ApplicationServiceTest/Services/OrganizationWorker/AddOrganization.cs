@@ -1,4 +1,4 @@
-﻿using TestHelper.ApplicationService;
+﻿using TestHelper.FixtureAttributes;
 using Moq;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;

@@ -1,9 +1,8 @@
-﻿using AutoFixture.Xunit2;
-using FluentAssertions;
+﻿using FluentAssertions;
 using OrganizationService.Domain.Enum;
 using OrganizationService.Domain.ValueObjects;
 using System;
-using TestHelper.ApplicationService;
+using TestHelper.FixtureAttributes;
 using Xunit;
 
 namespace DomainTest.ValueObjects

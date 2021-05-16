@@ -2,11 +2,7 @@
 using OrganizationService.ApplicationService.Interfaces;
 using OrganizationService.ApplicationService.Models;
 using OrganizationService.Shared.Messages.Commands.Organization;
-using Rebus.Bus;
 using Rebus.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrganizationService.Worker.Handlers.Organization

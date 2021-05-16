@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using OrganizationService.EventEmitter.Extensions;
-using OrganizationService.Shared.Messages.Commands.Organization;
-using Rebus.Bus;
 using System;
 using System.Collections.Generic;
 using System.Linq;

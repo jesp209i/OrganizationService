@@ -6,7 +6,7 @@ using OrganizationService.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace TestHelper.Infrastructure
+namespace TestHelper.FixtureAttributes
 {
     public class OrganizationEntityNoMemberAutoData : AutoDataAttribute
     {

@@ -1,4 +1,4 @@
-using TestHelper.ApplicationService;
+using TestHelper.FixtureAttributes;
 using FluentAssertions;
 using Moq;
 using OrganizationService.ApplicationService.Interfaces.Mapper;

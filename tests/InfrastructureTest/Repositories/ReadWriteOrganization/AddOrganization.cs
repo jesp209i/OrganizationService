@@ -10,7 +10,7 @@ using OrganizationService.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TestHelper.Infrastructure;
+using TestHelper.FixtureAttributes;
 using Xunit;
 
 namespace InfrastructureTest.Repositories.ReadWriteOrganization
@@ -49,7 +49,7 @@ namespace InfrastructureTest.Repositories.ReadWriteOrganization
         }
 
         [Theory, OrganizationEntityNoMemberAutoData]
-        public async Task UpdateOrganization_badEntity_ThrowsException(
+        public void UpdateOrganization_badEntity_ThrowsException(
             List<OrganizationEntity> list,
             Organization organization,
             Mock<IMapper<OrganizationMember, OrganizationMemberEntity>> mapMember,

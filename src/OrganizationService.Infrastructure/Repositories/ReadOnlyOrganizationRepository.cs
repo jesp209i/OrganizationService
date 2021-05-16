@@ -4,7 +4,6 @@ using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.Domain;
 using OrganizationService.Infrastructure.Entities;
 using OrganizationService.Infrastructure.Exceptions;
-using OrganizationService.Infrastructure.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;

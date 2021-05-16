@@ -3,11 +3,7 @@ using OrganizationService.ApplicationService.Interfaces;
 using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.Domain.Enum;
 using OrganizationService.Shared.Messages.Commands.OrganizationMember;
-using OrganizationService.Worker.Handlers.Organization;
 using Rebus.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrganizationService.Worker.Handlers.OrganizationMember

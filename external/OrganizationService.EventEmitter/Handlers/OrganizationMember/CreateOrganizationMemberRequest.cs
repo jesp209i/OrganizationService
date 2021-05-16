@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using OrganizationService.Shared.Messages.Commands.Organization;
 using OrganizationService.Shared.Messages.Commands.OrganizationMember;
 using Rebus.Bus;
 using System;

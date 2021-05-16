@@ -10,7 +10,7 @@ using OrganizationService.Domain.ValueObjects;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using TestHelper.ApplicationService;
+using TestHelper.FixtureAttributes;
 
 
 namespace ApplicationServiceTest.Services.OrganizationWorker

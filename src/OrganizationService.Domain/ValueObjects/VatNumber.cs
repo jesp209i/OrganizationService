@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrganizationService.Domain.ValueObjects
+﻿namespace OrganizationService.Domain.ValueObjects
 {
     public class VatNumber
     {

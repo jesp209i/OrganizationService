@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using OrganizationService.EventEmitter.Modules;
-using System;
 using System.Threading.Tasks;
 
 namespace OrganizationService.EventEmitter

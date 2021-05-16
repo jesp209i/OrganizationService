@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrganizationService.Infrastructure
+﻿namespace OrganizationService.Infrastructure
 {
     public static class Constants
     {

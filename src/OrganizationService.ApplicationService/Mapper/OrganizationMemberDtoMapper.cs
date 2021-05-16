@@ -1,9 +1,6 @@
 ﻿using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Models.OrganizationMember;
 using OrganizationService.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OrganizationService.ApplicationService.Mapper
 {

@@ -10,7 +10,7 @@ using OrganizationService.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TestHelper.Infrastructure;
+using TestHelper.FixtureAttributes;
 using Xunit;
 
 namespace InfrastructureTest.Repositories.ReadWriteOrganization
@@ -43,7 +43,7 @@ namespace InfrastructureTest.Repositories.ReadWriteOrganization
             Actual.Should().BeOfType<Organization>();
         }
         [Theory, OrganizationEntityNoMemberAutoData]
-        public async Task GetAsync_badId_ThrowsException(
+        public void GetAsync_badId_ThrowsException(
             List<OrganizationEntity> list, 
             OrganizationEntity organizationEntity,
             Mock<IMapper<OrganizationMember, OrganizationMemberEntity>> mapMember,

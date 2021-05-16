@@ -4,8 +4,7 @@ using OrganizationService.Domain;
 using OrganizationService.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using TestHelper.ApplicationService;
+using TestHelper.FixtureAttributes;
 using Xunit;
 
 namespace DomainTest

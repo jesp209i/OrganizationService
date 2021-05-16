@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using OrganizationService.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace DomainTest.ValueObjects

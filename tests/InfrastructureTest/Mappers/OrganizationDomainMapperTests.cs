@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using TestHelper.Infrastructure;
+using TestHelper.FixtureAttributes;
 using Moq;
 using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.Domain.ValueObjects;

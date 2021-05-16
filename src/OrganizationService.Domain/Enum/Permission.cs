@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrganizationService.Domain.Enum
+﻿namespace OrganizationService.Domain.Enum
 {
     public enum Permission
     {

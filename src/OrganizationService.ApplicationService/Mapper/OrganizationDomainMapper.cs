@@ -2,9 +2,7 @@
 using OrganizationService.ApplicationService.Models;
 using OrganizationService.Domain;
 using OrganizationService.Domain.ValueObjects;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace OrganizationService.ApplicationService.Mapper
 {

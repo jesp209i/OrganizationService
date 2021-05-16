@@ -1,7 +1,6 @@
 ﻿using ExternalPortal.Api.Filters;
 using ExternalPortal.Api.Models;
 using ExternalPortal.Api.Services;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

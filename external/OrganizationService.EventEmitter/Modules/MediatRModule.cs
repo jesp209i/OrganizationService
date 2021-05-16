@@ -1,9 +1,6 @@
 ﻿using Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace OrganizationService.EventEmitter.Modules
 {

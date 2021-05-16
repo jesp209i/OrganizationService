@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrganizationService.ApplicationService.Interfaces.Mapper
+﻿namespace OrganizationService.ApplicationService.Interfaces.Mapper
 {
     public interface IMapper<Tin, Tout>
     {
