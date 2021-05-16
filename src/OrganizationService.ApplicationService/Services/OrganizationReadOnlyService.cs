@@ -1,7 +1,10 @@
 ﻿using OrganizationService.ApplicationService.Interfaces;
+using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.ApplicationService.Models;
 using OrganizationService.ApplicationService.Models.OrganizationMember;
+using OrganizationService.Domain;
+using OrganizationService.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,34 +16,40 @@ namespace OrganizationService.ApplicationService.Services
     {
         private readonly IReadOnlyOrganizationRepository _organizationRepository;
         private readonly IReadOnlyOrganizationMemberRepository _memberRepository;
-        private readonly DtoMapper _mapper;
+        private readonly IMapper<Organization, OrganizationDto> _mapDomainToDto;
+        private readonly IMapper<OrganizationMember, OrganizationMemberDto> _mapMemberDomainToDto;
 
-        public OrganizationReadOnlyService(IReadOnlyOrganizationRepository organizationRepository, IReadOnlyOrganizationMemberRepository memberRepository, DtoMapper mapper)
+        public OrganizationReadOnlyService(
+            IReadOnlyOrganizationRepository organizationRepository, 
+            IReadOnlyOrganizationMemberRepository memberRepository,
+            IMapper<Organization, OrganizationDto> mapDomainToDto,
+            IMapper<OrganizationMember, OrganizationMemberDto> mapMemberDomainToDto)
         {
             _organizationRepository = organizationRepository;
             _memberRepository = memberRepository;
-            _mapper = mapper;
+            _mapDomainToDto = mapDomainToDto;
+            _mapMemberDomainToDto = mapMemberDomainToDto;
         }
 
         public async Task<IEnumerable<OrganizationDto>> GetAll()
         {
             var organizations = await _organizationRepository.GetAllAsync();
 
-            return organizations.Select(x => _mapper.Map(x).ToDto()).ToList();
+            return organizations.Select(x => _mapDomainToDto.Map(x).ToOutFormat()).ToList();
         }
 
         public async Task<OrganizationDto> GetOrganization(Guid id)
         {
             var org = await _organizationRepository.GetAsync(id);
 
-            return _mapper.Map(org).ToDto();
+            return _mapDomainToDto.Map(org).ToOutFormat();
         }
 
         public async Task<IEnumerable<OrganizationMemberDto>> GetOrganizationMembers(Guid id)
         {
             var org = await _organizationRepository.GetAsync(id);
 
-            var members = _mapper.Map(org).ToOrganizationMembersDto();
+            var members = org.Members.Select(x => _mapMemberDomainToDto.Map(x).ToOutFormat()).ToList();
             
             return members;
         }
@@ -49,7 +58,7 @@ namespace OrganizationService.ApplicationService.Services
         {
             var orgs = await _memberRepository.GetUserOrganizationsByEmail(email);
 
-            return orgs.Select(x => _mapper.Map(x).ToDto()
+            return orgs.Select(x => _mapDomainToDto.Map(x).ToOutFormat()
             ).ToList();
         }
     }

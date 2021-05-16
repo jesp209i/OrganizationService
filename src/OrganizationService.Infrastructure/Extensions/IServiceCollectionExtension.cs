@@ -3,6 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.Infrastructure.Repositories;
+using OrganizationService.Infrastructure.Mapper;
+using OrganizationService.ApplicationService.Interfaces.Mapper;
+using OrganizationService.Infrastructure.Entities;
+using OrganizationService.Domain;
+using OrganizationService.Domain.ValueObjects;
 
 namespace OrganizationService.Infrastructure.Extensions
 {
@@ -20,6 +25,11 @@ namespace OrganizationService.Infrastructure.Extensions
             services.AddScoped<IReadWriteOrganizationRepository, ReadWriteOrganizationRepository>();
             //services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
 
+            services.AddTransient<IMapper<OrganizationMember, OrganizationMemberEntity>, OrganizationMemberEntityMapper>();
+            services.AddTransient<IMapper<Organization, OrganizationEntity>, OrganizationEntityMapper>();
+            services.AddTransient<IMapper<OrganizationMemberEntity, OrganizationMember>, OrganizationMemberDomainMapper>();
+            services.AddTransient<IMapper<OrganizationEntity, Organization>, OrganizationDomainMapper>();
+
             return services;
         }
 
@@ -34,6 +44,9 @@ namespace OrganizationService.Infrastructure.Extensions
 
             services.AddScoped<IReadOnlyOrganizationRepository, ReadOnlyOrganizationRepository>();
             services.AddScoped<IReadOnlyOrganizationMemberRepository, ReadOnlyOrganizationMemberRepository>();
+
+            services.AddTransient<IMapper<OrganizationMemberEntity, OrganizationMember>, OrganizationMemberDomainMapper>();
+            services.AddTransient<IMapper<OrganizationEntity, Organization>, OrganizationDomainMapper>();
 
             return services;
         }

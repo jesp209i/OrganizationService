@@ -1,13 +1,9 @@
-﻿using AutoFixture;
-using AutoFixture.Kernel;
+﻿using AutoFixture.Kernel;
 using OrganizationService.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
-using System.Text;
 
-namespace InfrastructureTest.Helpers
+namespace TestHelper
 {
     public class OrganizationMemberGenerator : ISpecimenBuilder
     {
@@ -28,7 +24,7 @@ namespace InfrastructureTest.Helpers
 
 		}
 
-        private string GenerateRandomEmail()
+        public string GenerateRandomEmail()
         {
             string[] mailAliases = { "bubber", "jytte", "testhest", "andre", "jesper" };
             string[] domains = { "example.com", "example.net", "example.org", "example.dk", "testhest.dk" };

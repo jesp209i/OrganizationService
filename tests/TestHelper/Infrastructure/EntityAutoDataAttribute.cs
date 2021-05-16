@@ -1,17 +1,18 @@
 ﻿using AutoFixture;
 using AutoFixture.Xunit2;
+using System;
 using System.Linq;
 
-namespace ApplicationServiceTest.Helpers
+namespace TestHelper.Infrastructure
 {
-    internal class EntityAutoDataAttribute : AutoDataAttribute
+    public class EntityAutoDataAttribute : AutoDataAttribute
     {
         public EntityAutoDataAttribute() : base(() => new Fixture().Customize(new EntityAutoDataCustomization()))
         {
         }
     }
 
-    internal class EntityAutoDataCustomization : ICustomization
+    public class EntityAutoDataCustomization : ICustomization
     {
         public void Customize(IFixture fixture)
         {

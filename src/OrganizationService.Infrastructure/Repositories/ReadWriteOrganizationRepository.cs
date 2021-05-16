@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OrganizationService.ApplicationService.Interfaces.Mapper;
 using OrganizationService.ApplicationService.Interfaces.Repository;
 using OrganizationService.Domain;
+using OrganizationService.Domain.ValueObjects;
 using OrganizationService.Infrastructure.Entities;
 using OrganizationService.Infrastructure.Exceptions;
-using OrganizationService.Infrastructure.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,25 @@ namespace OrganizationService.Infrastructure.Repositories
 {
     public class ReadWriteOrganizationRepository : RepositoryBase<OrganizationEntity>, IReadWriteOrganizationRepository
     {
-        public ReadWriteOrganizationRepository(OrganizationDbContext context)
-            : base(context) { }
+        private readonly IMapper<Organization, OrganizationEntity> _mapper;
+        private readonly IMapper<OrganizationEntity, Organization> _domainMapper;
+        private readonly IMapper<OrganizationMember, OrganizationMemberEntity> _orgMemberEntityMapper;
+
+        public ReadWriteOrganizationRepository(
+            OrganizationDbContext context, 
+            IMapper<Organization, OrganizationEntity> mapper,
+            IMapper<OrganizationEntity, Organization> domainMapper,
+            IMapper<OrganizationMember, OrganizationMemberEntity> orgMemberEntityMapper
+            ) : base(context)
+        {
+            _mapper = mapper;
+            _domainMapper = domainMapper;
+            _orgMemberEntityMapper = orgMemberEntityMapper;
+        }
 
         public async Task AddOrganization(Organization organization)
         {
-            var orgEnt = PersistenceMapper.Map(organization).ToEntity();
+            var orgEnt = _mapper.Map(organization).ToOutFormat();
 
             DbData.Add(orgEnt);
             await _context.SaveChangesAsync();
@@ -28,7 +42,7 @@ namespace OrganizationService.Infrastructure.Repositories
         {
             var list = await _context.Organizations.ToListAsync();
 
-            return list.Select(x => PersistenceMapper.Map(x).ToDomain()).ToList();
+            return list.Select(x => _domainMapper.Map(x).ToOutFormat()).ToList();
         }
 
         public async Task<Organization> GetAsync(Guid id)
@@ -38,7 +52,7 @@ namespace OrganizationService.Infrastructure.Repositories
             if (entity is null)
                 throw new EntityNotFoundException($"Id: {id} does not represent an OrganizationEntity");
             
-            return PersistenceMapper.Map(entity).ToDomain();
+            return _domainMapper.Map(entity).ToOutFormat();
         }
 
         public async Task UpdateAsync(Organization updatedOrganization)
@@ -57,7 +71,7 @@ namespace OrganizationService.Infrastructure.Repositories
             orgEntity.Website = updatedOrganization.Website;
             orgEntity.ChangeDate = updatedOrganization.ChangeDate;
             orgEntity.ChangedBy = updatedOrganization.ChangedBy;
-            orgEntity.Members = updatedOrganization.Members.Select(x => PersistenceMapper.Map(updatedOrganization).MemberToEntity(x)).ToList();
+            orgEntity.Members = updatedOrganization.Members.Select(x => _orgMemberEntityMapper.Map(x).ToOutFormat()).ToList();
 
             _context.Entry(orgEntity).State = EntityState.Modified;
             
