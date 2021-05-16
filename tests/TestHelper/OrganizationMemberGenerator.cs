@@ -24,7 +24,7 @@ namespace TestHelper
             return new NoSpecimen();
 
 		}
-        private List<string> usedMails = new List<string>();
+        private readonly List<string> _usedMails = new List<string>();
         public string GenerateRandomEmail()
         {
             string[] mailAliases = { "bubber", "jytte", "testhest", "andre", "jesper", "postkasse", "niller", "unique", "thesign", "mikey", "email" };
@@ -32,10 +32,10 @@ namespace TestHelper
             int dIndex = new Random().Next(domains.Length);
             int maIndex = new Random().Next(mailAliases.Length);
             var mail = $"{mailAliases[maIndex]}@{domains[dIndex]}";
-            if (usedMails.Contains(mail)){
+            if (_usedMails.Contains(mail)){
                 mail = GenerateRandomEmail();
             }
-            usedMails.Add(mail);
+            _usedMails.Add(mail);
             return mail;
         }
     }

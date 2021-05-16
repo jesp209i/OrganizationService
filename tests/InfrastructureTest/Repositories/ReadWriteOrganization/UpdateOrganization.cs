@@ -66,7 +66,6 @@ namespace InfrastructureTest.Repositories.ReadWriteOrganization
         {
             // Arrange
             var orgMemberDomainMapper = new Mock<IMapper<OrganizationMemberEntity, OrganizationMember>>();
-            var mail = "test@mail.test";
             var i = 0;
             orgMemberDomainMapper.Setup(x => x.Map(It.IsAny<OrganizationMemberEntity>())).Returns(orgMemberDomainMapper.Object);
             orgMemberDomainMapper.Setup(x => x.ToOutFormat()).Returns(memb);

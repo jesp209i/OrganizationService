@@ -51,7 +51,7 @@ namespace Messages.Organization
         }
 
         [Theory]
-        [MemberData("TestData", MemberType = typeof(CreateOrganizationCommand_BadInput_DataSource))]
+        [MemberData(nameof(CreateOrganizationCommand_BadInput_DataSource.TestData), MemberType = typeof(CreateOrganizationCommand_BadInput_DataSource))]
         public void Instansiate_MissingInput_ThrowsException(Guid id, string name, string street, string streetExtended, string postalCode, string city, string country, string vatNumber, string website, DateTime changeDate, string changedBy)
         {
             Action act = () => new CreateOrganizationCommand(
