@@ -18,7 +18,7 @@ namespace InfrastructureTest.Repositories.ReadWriteOrganization
 {
     public class UpdateOrganization
     {
-        [Theory, OrganizationEntityNoMemberAutoData]
+        [Theory, OrganizationEntityNoMemberAutoData, EntityAutoData]
         public async Task UpdateOrganization_Success(
             List<OrganizationEntity> list, 
             Organization organization, 
@@ -28,9 +28,12 @@ namespace InfrastructureTest.Repositories.ReadWriteOrganization
         {
             // Arrange
             var orgMemberDomainMapper = new Mock<IMapper<OrganizationMemberEntity, OrganizationMember>>();
-            
+            var mail = "test@mail.test";
+            var i = 0;
             orgMemberDomainMapper.Setup(x => x.Map(It.IsAny<OrganizationMemberEntity>())).Returns(orgMemberDomainMapper.Object);
             orgMemberDomainMapper.Setup(x => x.ToOutFormat()).Returns(memb);
+            mapMember.Setup(x => x.Map(It.IsAny<OrganizationMember>())).Returns(mapMember.Object);
+            mapMember.Setup(x => x.ToOutFormat()).Returns(new OrganizationMemberEntity { Email = $"{i}{mail}" }).Callback(() => i= i++);
             var mapDomain = new OrganizationDomainMapper(orgMemberDomainMapper.Object);
             var entityMapper = new OrganizationEntityMapper(mapMember.Object);
             var db = new InMemoryDb<OrganizationDbContext>();
