@@ -29,5 +29,5 @@ For all project you must set the following, unless stated otherwise
 
 ## ExternalPortal.Api
 - SERVICEBUS_CONNECTIONSTRING
-	- connect to servicebus in azure
+	- connect to servicebus in azure 
 
